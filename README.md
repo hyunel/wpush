@@ -2,10 +2,10 @@
 > 使用成本极低的腾讯云函数搭建属于自己的推送服务
 
 
-<center>
-<img src="docs/phone1.jpg" style="width: 25%" align="center"></img>
-<img src="docs/phone2.jpg" style="width: 25%" align="center"></img>
-</center>
+<div style="text-align: center;">
+<img src="docs/phone1.jpg" style="width: 25%" alt="phone1"/>
+<img src="docs/phone2.jpg" style="width: 25%" alt="phone2"/>
+</div>
 
 ### Feature
 - :tada: 超长消息持久化储存  
@@ -18,10 +18,12 @@
 #### 发送消息
 > 若不提供 content 参数将发送普通的文本消息
 
-- 发送一个最简单的消息
+- 发送一个最简单的消息  
+
 `https://你的云函数地址/send?secret=你配置的密钥&tittle=测试一下`
 
-- 发送一个带有内容的卡片消息
+- 发送一个带有内容的卡片消息  
+
 `https://你的云函数地址/send?secret=你配置的密钥tittle=测试一下&content=这是消息的内容blablablabla`
 
 - 当然, 也可以通过 POST 请求发送
@@ -60,3 +62,4 @@ POST /send_rich
 
 ### 云函数搭建
 详细搭建教程, [点我查看](docs/scf.md)
+
