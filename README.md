@@ -1,8 +1,8 @@
-# WPush
-> 使用成本极低的腾讯云函数搭建属于自己的推送服务
+<div align=center><img src="docs/phone.jpg" width="400" alt="phone2"/></div>
 
+<h1 align="center">WPush</h1>
+<h6 align="center">使用成本极低的腾讯云函数搭建属于自己的推送服务</h6>
 
-<center class="half"><img src="docs/phone.jpg" width="400" alt="phone2"/></center>
 
 ### Feature
 - :tada: 超长消息持久化储存  
