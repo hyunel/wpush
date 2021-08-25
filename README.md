@@ -2,10 +2,7 @@
 > 使用成本极低的腾讯云函数搭建属于自己的推送服务
 
 
-<div style="text-align: center;">
-<img src="docs/phone1.jpg" style="width: 25%" alt="phone1"/>
-<img src="docs/phone2.jpg" style="width: 25%" alt="phone2"/>
-</div>
+<center class="half"><img src="docs/phone.jpg" width="400" alt="phone2"/></center>
 
 ### Feature
 - :tada: 超长消息持久化储存  
