@@ -34,7 +34,7 @@ POST /send
 }
 ```
 
-- 你可以在添加 `to` `tag` `party` 参数来删选发送的企业成员
+- 你可以添加 `to` `tag` `party` 参数来筛选发送的企业成员
 ```json
 POST /send
 
