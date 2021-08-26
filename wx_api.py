@@ -26,10 +26,12 @@ class WxApi:
         self.cached_token['token'] = ret['access_token']
         return ret['access_token']
 
-    def send_msg(self, msg_type, msg_content, to='@all', safe=0, dup_check=0, dup_check_interval=1800):
+    def send_msg(self, msg_type, msg_content, to='@all', party='', tag='', safe=0, dup_check=0, dup_check_interval=1800):
         data = {
             'safe': safe,
             'touser': to,
+            'toparty': party,
+            'totag': tag,
             'msgtype': msg_type,
             'agentid': self.config['agent_id'],
             'enable_duplicate_check': dup_check,

@@ -41,6 +41,21 @@ class MainController:
             if arg not in self.event['body'] and arg not in self.event['queryString']:
                 raise MissingParamError(arg)
 
+    def spec_send_to(self):
+        ret = {}
+        to_user = self.get_param('to')
+        to_tag = self.get_param('tag')
+        to_party = self.get_param('party')
+        if to_tag or to_party:
+            ret['to'] = ''    # 删除默认值
+        elif to_user:
+            ret['to'] = to_user
+        if to_tag:
+            ret['tag'] = to_tag
+        if to_party:
+            ret['party'] = to_party
+        return ret
+
     def index(self):
         # TODO 主页渲染
         return {"body": "WxPush 已成功搭建~"}
@@ -51,13 +66,14 @@ class MainController:
         tittle = self.get_param('tittle')
         content = self.get_param('content')
         if not content:
-            WX_API.send_text(self.get_param('tittle'))
+            WX_API.send_text(self.get_param('tittle'), **self.spec_send_to())
         else:
             summary = content[:128] + '...' if len(content) > 128 else content
             # 数据库已经正常配置
             if DB:
                 msg = DB.insert_message(tittle, content)
-                WX_API.send_text_card(msg.tittle, summary, '{}/show/{}'.format(SYS_CONFIG['sys_url'], msg.safe_id))
+                WX_API.send_text_card(msg.tittle, summary, '{}/show/{}'.format(SYS_CONFIG['sys_url'], msg.safe_id),
+                                      **self.spec_send_to())
                 return {"body": {"code": 0, "msg_id": msg.safe_id}}
             else:
                 # content 放进 url 参数里, 长度超过 1000 则截断
@@ -65,7 +81,7 @@ class MainController:
                     SYS_CONFIG['sys_url'],
                     int(time.time()*1000),
                     quote(tittle, encoding='utf-8'),
-                    quote(content, encoding='utf-8')[:1900]))
+                    quote(content, encoding='utf-8')[:1900]), **self.spec_send_to())
         return {"body": {"code": 0}}
 
     def show_msg(self):
@@ -83,5 +99,5 @@ class MainController:
 
     def send_rich_msg(self):
         self.verify_params('type', 'data')
-        WX_API.send_msg(self.get_param('type'), self.get_param('data'))
+        WX_API.send_msg(self.get_param('type'), self.get_param('data'), **self.spec_send_to())
         return {"body": {"code": 0}}

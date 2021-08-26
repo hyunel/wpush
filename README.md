@@ -28,9 +28,23 @@
 POST /send
 
 {
-	"secret": "你配置的密钥",
-	"tittle": "测试一下",
-	"content": "这是消息的内容blablablabla"
+  "secret": "你配置的密钥",
+  "tittle": "测试一下",
+  "content": "这是消息的内容blablablabla"
+}
+```
+
+- 你可以在添加 `to` `tag` `party` 参数来删选发送的企业成员
+```json
+POST /send
+
+{
+  "to": "USER_ID",
+  "tag": "TAG_ID",
+  "party": "PARTY_ID",
+  "secret": "你配置的密钥",
+  "tittle": "测试一下",
+  "content": "这是消息的内容blablablabla"
 }
 ```
 
@@ -41,11 +55,11 @@ POST /send
 POST /send_rich
 
 {
-	"secret": "你配置的密钥",
-	"type": "markdown",
-	"data": {
-		"content": "# 消息标题\n## 二级标题\n> 引用测试\n\n[baidu](https://baidu.com)"
-	}
+  "secret": "你配置的密钥",
+  "type": "markdown",
+  "data": {
+    "content": "# 消息标题\n## 二级标题\n> 引用测试\n\n[baidu](https://baidu.com)"
+  }
 }
 ```
 
@@ -54,7 +68,7 @@ POST /send_rich
 > 目前仅提供对卡片消息的展示, 
 
 - 使用数据库: `https://你的云函数地址/show/消息ID`
-- 未使用数据库: `https://你的云函数地址/show?t=TIME&h=TITTLE&=CONTENT`
+- 未使用数据库: `https://你的云函数地址/show?t=TIME&h=TITTLE&c=CONTENT`
 
 
 ### 云函数搭建
