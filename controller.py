@@ -61,12 +61,11 @@ class MainController:
                 return {"body": {"code": 0, "msg_id": msg.safe_id}}
             else:
                 # content 放进 url 参数里, 长度超过 1000 则截断
-                content = content[:1000]
                 WX_API.send_text_card(tittle, summary, '{}/show?t={}&h={}&c={}'.format(
                     SYS_CONFIG['sys_url'],
                     int(time.time()*1000),
                     quote(tittle, encoding='utf-8'),
-                    quote(content, encoding='utf-8')))
+                    quote(content, encoding='utf-8')[:1900]))
         return {"body": {"code": 0}}
 
     def show_msg(self):
