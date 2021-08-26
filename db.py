@@ -9,10 +9,14 @@ import uuid
 Base = declarative_base()
 
 
+def gen_safe_id():
+    return str(uuid.uuid1())
+
+
 class Message(Base):
     __tablename__ = 'detail_message'  # 表名
-    id = Column(Integer, primary_key=True)
-    safe_id = Column(String(40), index=True, unique=True, nullable=False, default=str(uuid.uuid1()))
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    safe_id = Column(String(40), index=True, unique=True, nullable=False, default=gen_safe_id)
     tittle = Column(String(255), nullable=False)
     content = Column(Text(), nullable=False)
     time = Column(DateTime(), server_default=text('NOW()'))
@@ -36,7 +40,7 @@ class Db:
     def insert_message(self, tittle, content):
         msg = Message(tittle, content)
         self.session.add(msg)
-        self.session.flush()
+        self.session.commit()
         return msg
 
     def query_message(self, msg_id):
