@@ -60,8 +60,8 @@ class MainController:
                 WX_API.send_text_card(msg.tittle, summary, '{}/show/{}'.format(SYS_CONFIG['sys_url'], msg.safe_id))
                 return {"body": {"code": 0, "msg_id": msg.safe_id}}
             else:
-                # content 放进 url 参数里, 长度超过 1500 则截断
-                content = content[:1500]
+                # content 放进 url 参数里, 长度超过 1000 则截断
+                content = content[:1000]
                 WX_API.send_text_card(tittle, summary, '{}/show?t={}&h={}&c={}'.format(
                     SYS_CONFIG['sys_url'],
                     int(time.time()*1000),
