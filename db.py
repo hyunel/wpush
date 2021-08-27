@@ -1,16 +1,18 @@
 from sqlalchemy import create_engine, Column, text
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Integer, String, Text, DateTime
+from sqlalchemy import Integer, String, DateTime
+from sqlalchemy.dialects.mysql import MEDIUMTEXT
 from sqlalchemy.orm import sessionmaker
 
 from config import SYS_CONFIG
 import uuid
+import time
 
 Base = declarative_base()
 
 
 def gen_safe_id():
-    return str(uuid.uuid1())
+    return uuid.uuid5(uuid.NAMESPACE_X500, '{}|{}|{}'.format(SYS_CONFIG['api_secret'], str(time.time()), time.perf_counter())).hex
 
 
 class Message(Base):
@@ -18,7 +20,7 @@ class Message(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     safe_id = Column(String(40), index=True, unique=True, nullable=False, default=gen_safe_id)
     tittle = Column(String(255), nullable=False)
-    content = Column(Text(), nullable=False)
+    content = Column(MEDIUMTEXT(), nullable=False)
     time = Column(DateTime(), server_default=text('NOW()'))
 
     def __init__(self, tittle, content):
