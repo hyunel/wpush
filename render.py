@@ -5,7 +5,7 @@ html = '''
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>消息阅读 - WxPush</title>
+    <title>消息阅读 - WPush</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <style>
         body {
@@ -31,7 +31,7 @@ html = '''
             border-radius: 8px;
         }
         pre {
-            white-space: normal;
+            white-space: pre-wrap;
             word-break: break-all;
         }
         .tittle {
