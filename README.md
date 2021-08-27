@@ -11,7 +11,7 @@
 - :tada: 可选的数据库支持  
 - :tada: 免维护, 一次部署稳定使用
 
-### API
+### Get Started
 #### 发送消息
 > 若不提供 content 参数将发送普通的文本消息
 
@@ -71,6 +71,6 @@ POST /send_rich
 - 未使用数据库: `https://你的云函数地址/show?t=TIME&h=TITTLE&c=CONTENT`
 
 
-### 云函数搭建
+### 搭建 & 部署
 详细搭建教程, [点我查看](docs/scf.md)
 
