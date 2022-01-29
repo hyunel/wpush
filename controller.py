@@ -46,6 +46,14 @@ class MainController:
         to_user = self.get_param('to')
         to_tag = self.get_param('tag')
         to_party = self.get_param('party')
+
+        if type(to_user) is list:
+            to_user = '|'.join(to_user)
+        if type(to_tag) is list:
+            to_tag = '|'.join(to_tag)
+        if type(to_party) is list:
+            to_party = '|'.join(to_party)
+
         if to_tag or to_party:
             ret['to'] = ''    # 删除默认值
         elif to_user:
@@ -58,7 +66,7 @@ class MainController:
 
     def index(self):
         # TODO 主页渲染
-        return {"body": "WxPush 已成功搭建~"}
+        return {"body": "WPush 已成功搭建~"}
 
     def send_msg(self):
         # TODO 更多消息类型的支持
