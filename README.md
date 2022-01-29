@@ -39,9 +39,23 @@ POST /send
 POST /send
 
 {
-  "to": "USER_ID",
-  "tag": "TAG_ID",
+  "to": "USER_ID1|USER_ID2",
+  "tag": "TAG_ID1|TAG_ID2",
   "party": "PARTY_ID",
+  "secret": "你配置的密钥",
+  "tittle": "测试一下",
+  "content": "这是消息的内容blablablabla"
+}
+```
+
+这些参数也可以是数组：
+```json
+POST /send
+
+{
+  "to": ["USER_ID1", "USER_ID2"],
+  "tag": ["TAG_ID1", "TAG_ID2"],
+  "party": ["PARTY_ID1", "PARTY_ID2"],
   "secret": "你配置的密钥",
   "tittle": "测试一下",
   "content": "这是消息的内容blablablabla"
