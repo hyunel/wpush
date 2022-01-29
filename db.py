@@ -46,7 +46,7 @@ class Db:
         return msg
 
     def query_message(self, msg_id):
-        return self.session.query(Message).filter(Message.safe_id == msg_id).one()
+        return self.session.query(Message).filter(Message.safe_id == msg_id).one_or_none()
 
     def __del__(self):
         self.session.close()
