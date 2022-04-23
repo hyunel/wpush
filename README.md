@@ -90,3 +90,4 @@ POST /send_rich
 > 因为腾讯云函数 5 月 23 日后不再提供免费额度，不建议再使用 [腾讯云函数搭建](docs/scf.md)  
 > 推荐使用 **Vercel** 作为替代，目前已添加对 **Vercel** 的支持
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhyunel%2Fwpush&env=SYS_URL,API_SECRET,CORP_ID,CORP_SECRET,AGENT_ID&envDescription=Configuration%20needed%20for%20WPush&envLink=https%3A%2F%2Fgithub.com%2Fhyunel%2Fwpush%2Fblob%2Fmaster%2Fconfig.py&project-name=wpush&repo-name=wpush)
