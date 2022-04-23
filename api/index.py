@@ -14,9 +14,14 @@ route = route.setup_routes()
 # Vercel Api
 class handler(BaseHTTPRequestHandler):
     def send_json(self, data):
-        self.send_header('Content-type', 'application/json')
+        self.send_header('Content-type', 'application/json;charset=utf-8')
         self.end_headers()
         self.wfile.write(json.dumps(data, ensure_ascii=False).encode())
+
+    def send_text(self, txt):
+        self.send_header('Content-type', 'text/html;charset=utf-8')
+        self.end_headers()
+        self.wfile.write(txt.encode())
 
     def handle_one_request(self):
         """Handle a single HTTP request.
@@ -45,9 +50,7 @@ class handler(BaseHTTPRequestHandler):
             route_result = route.match(url.path, self.command)
             if route_result is None:
                 self.send_response(404)
-                self.send_header('Content-type', 'text/html')
-                self.end_headers()
-                self.wfile.write("404 Not Found".encode())
+                self.send_text("404 Not Found")
             else:
                 try:
                     body = ''
@@ -68,13 +71,18 @@ class handler(BaseHTTPRequestHandler):
 
                     resp = getattr(obj, route_result['action'])()
                     self.send_response(200)
+
                     if 'body' in resp:
-                        self.send_json({"code": 0, "msg": resp['body']})
+                        if type(resp['body']) is dict:
+                            self.send_json({"code": 0, "msg": resp['body']})
+                        elif type(resp['body']) is str:
+                            self.send_text(resp['body'])
+                    else:
+                        self.send_json({"code": 0, "msg": None})
+
                 except YunError as e:
                     self.send_response(200)
                     self.send_json({"code": e.code, "msg": e.message})
-                except Exception as e:
-                    self.send_response(500)
 
             self.wfile.flush() #actually send the response if not already done.
         except socket.timeout as e:
