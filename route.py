@@ -36,3 +36,14 @@ class Router:
             if flag_matched:
                 return {'action': rule['action'], 'params': matched_params, 'secret': rule['secret']}
         return
+
+
+def setup_routes():
+    # 设置路由
+    route = Router()
+    route.add(R'/show/{msg_id:[0-9a-z\-]+}', action='show_msg', methods=["GET"])
+    route.add(R'/show', action='show_msg_param', methods=["GET"])
+    route.add('/send', action='send_msg', methods=["GET", "POST"], secret=True)
+    route.add('/send_rich', action='send_rich_msg', methods=["POST"], secret=True)
+    route.add('/', action='index')
+    return route

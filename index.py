@@ -4,16 +4,10 @@ import route
 import controller
 from errors import YunError
 
-# 设置路由
-route = route.Router()
-route.add(R'/show/{msg_id:[0-9a-z\-]+}', action='show_msg', methods=["GET"])
-route.add(R'/show', action='show_msg_param', methods=["GET"])
-route.add('/send', action='send_msg', methods=["GET", "POST"], secret=True)
-route.add('/send_rich', action='send_rich_msg', methods=["POST"], secret=True)
-route.add('/', action='index')
+route = route.setup_routes()
 
 
-# API 网关触发器
+# 腾讯 API 网关触发器
 def main_handler(event, context):
     event_result = {
         "isBase64Encoded": False,
@@ -26,7 +20,7 @@ def main_handler(event, context):
         event_result['body'] = '404 Not Found'
     else:
         try:
-            obj = controller.MainController(event, context, route_result)
+            obj = controller.MainController(event, route_result)
             event_result.update(getattr(obj, route_result['action'])())
         except YunError as e:
             event_result['statusCode'] = 500

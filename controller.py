@@ -13,9 +13,8 @@ WX_API = WxApi(WX_CONFIG)
 
 
 class MainController:
-    def __init__(self, event, context, route_result):
+    def __init__(self, event, route_result):
         self.event = event
-        self.context = context
         self.route_result = route_result
 
         try:

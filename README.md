@@ -1,7 +1,7 @@
 <div align=center><img src="docs/phone.jpg" width="400" alt="phone2"/></div>
 
 <h1 align="center">WPush</h1>
-<h6 align="center">使用成本极低的腾讯云函数搭建属于自己的推送服务</h6>
+<h6 align="center">使用 Vercel 搭建属于自己的推送服务</h6>
 
 
 ### Feature
@@ -86,5 +86,7 @@ POST /send_rich
 
 
 ### 搭建 & 部署
-详细搭建教程, [点我查看](docs/scf.md)
+> **2022-04-23 更新**:  
+> 因为腾讯云函数 5 月 23 日后不再提供免费额度，不建议再使用 [腾讯云函数搭建](docs/scf.md)  
+> 推荐使用 **Vercel** 作为替代，目前已添加对 **Vercel** 的支持
 
