@@ -73,10 +73,12 @@ class MainController:
         self.verify_params('tittle')
         tittle = self.get_param('tittle')
         content = self.get_param('content')
+        summary = self.get_param('summary')
         if not content:
             WX_API.send_text(self.get_param('tittle'), **self.spec_send_to())
         else:
-            summary = content[:128] + '...' if len(content) > 128 else content
+            if not summary:
+                summary = content[:128] + '...' if len(content) > 128 else content
             # 数据库已经正常配置
             if DB:
                 msg = DB.insert_message(tittle, content)
