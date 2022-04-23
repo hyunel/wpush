@@ -3,13 +3,13 @@ import time
 from urllib.parse import quote
 
 from db import Db
-from config import WX_CONFIG, SYS_CONFIG
+import config
 from wx_api import WxApi
 from errors import *
 import render
 
-DB = Db() if SYS_CONFIG['db_addr'] != '' and SYS_CONFIG['db_name'] != '' else None
-WX_API = WxApi(WX_CONFIG)
+DB = Db() if config.get('db_addr') != '' and config.get('db_name') != '' else None
+WX_API = WxApi()
 
 
 class MainController:
@@ -25,7 +25,7 @@ class MainController:
         except json.decoder.JSONDecodeError:
             raise BadRequestError('请求数据非法')
 
-        if route_result['secret'] and self.get_param('secret') != SYS_CONFIG['api_secret']:
+        if route_result['secret'] and self.get_param('secret') != config.get('api_secret'):
             raise BadRequestError('请求密钥不正确')
 
     def get_param(self, name):
@@ -81,13 +81,13 @@ class MainController:
             # 数据库已经正常配置
             if DB:
                 msg = DB.insert_message(tittle, content)
-                WX_API.send_text_card(msg.tittle, summary, '{}/show/{}'.format(SYS_CONFIG['sys_url'], msg.safe_id),
+                WX_API.send_text_card(msg.tittle, summary, '{}/show/{}'.format(config.get('sys_url'), msg.safe_id),
                                       **self.spec_send_to())
                 return {"body": {"code": 0, "msg_id": msg.safe_id}}
             else:
                 # content 放进 url 参数里, 长度超过 1000 则截断
                 WX_API.send_text_card(tittle, summary, '{}/show?t={}&h={}&c={}'.format(
-                    SYS_CONFIG['sys_url'],
+                    config.get('sys_url'),
                     int(time.time()*1000),
                     quote(tittle, encoding='utf-8'),
                     quote(content, encoding='utf-8')[:1900]), **self.spec_send_to())

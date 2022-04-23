@@ -1,22 +1,21 @@
 import json
 import time
 import requests
+
+import config
 from errors import ApiError
 
 
 class WxApi:
     cached_token = {}
 
-    def __init__(self, config):
-        self.config = config
-
     def get_token(self):
         if 'exp' in self.cached_token and self.cached_token['exp'] > time.time():
             return self.cached_token['token']
 
         ret = json.loads(requests.get('https://qyapi.weixin.qq.com/cgi-bin/gettoken', params={
-            'corpid': self.config['corp_id'],
-            'corpsecret': self.config['corp_secret']
+            'corpid': config.get('corp_id'),
+            'corpsecret': config.get('corp_secret')
         }).text)
 
         if ret['errcode'] != 0:
@@ -33,7 +32,7 @@ class WxApi:
             'toparty': party,
             'totag': tag,
             'msgtype': msg_type,
-            'agentid': self.config['agent_id'],
+            'agentid': config.get('agent_id'),
             'enable_duplicate_check': dup_check,
             'duplicate_check_interval': dup_check_interval,
             msg_type: msg_content

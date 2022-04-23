@@ -1,7 +1,7 @@
 <div align=center><img src="docs/phone.jpg" width="400" alt="phone2"/></div>
 
 <h1 align="center">WPush</h1>
-<h6 align="center">使用 Vercel 搭建属于自己的推送服务</h6>
+<h6 align="center">使用云函数搭建属于自己的推送服务</h6>
 
 
 ### Feature

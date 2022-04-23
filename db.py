@@ -4,7 +4,7 @@ from sqlalchemy import Integer, String, DateTime
 from sqlalchemy.dialects.mysql import MEDIUMTEXT
 from sqlalchemy.orm import sessionmaker
 
-from config import SYS_CONFIG
+import config
 import uuid
 import time
 
@@ -12,7 +12,7 @@ Base = declarative_base()
 
 
 def gen_safe_id():
-    return uuid.uuid5(uuid.NAMESPACE_X500, '{}|{}|{}'.format(SYS_CONFIG['api_secret'], str(time.time()), time.perf_counter())).hex
+    return uuid.uuid5(uuid.NAMESPACE_X500, '{}|{}|{}'.format(config.get('api_secret'), str(time.time()), time.perf_counter())).hex
 
 
 class Message(Base):
@@ -31,7 +31,7 @@ class Message(Base):
 class Db:
     def __init__(self):
         conn_info = "mysql+mysqlconnector://%s:%s@%s:3306/%s?charset=utf8mb4" % \
-                    (SYS_CONFIG['db_user'], SYS_CONFIG['db_pwd'], SYS_CONFIG['db_addr'], SYS_CONFIG['db_name'])
+                    (config.get('db_user'), config.get('db_pwd'), config.get('db_addr'), config.get('db_name'))
 
         engine = create_engine(conn_info, echo=True)
         Base.metadata.create_all(engine)

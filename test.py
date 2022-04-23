@@ -1,7 +1,7 @@
 import json
 
 from index import main_handler
-from config import SYS_CONFIG
+import config
 
 
 # 普通消息发送测试
@@ -9,7 +9,7 @@ print(main_handler({
     "path": "/send",
     "httpMethod": "POST",
     "queryString": {
-        "secret": SYS_CONFIG['api_secret'],
+        "secret": config.get('api_secret'),
         "tittle": "dbg---OK"
     }
 }, None))
@@ -19,7 +19,7 @@ result = main_handler({
     "path": "/send",
     "httpMethod": "POST",
     "queryString": {
-        "secret": SYS_CONFIG['api_secret'],
+        "secret": config.get('api_secret'),
         "tittle": "dbg---OK",
         "content": "这是卡片消息"
     }
