@@ -16,7 +16,7 @@ class handler(BaseHTTPRequestHandler):
     def send_json(self, data):
         self.send_header('Content-type', 'application/json')
         self.end_headers()
-        self.wfile.write(json.dumps(data).encode())
+        self.wfile.write(json.dumps(data, ensure_ascii=False).encode())
 
     def handle_one_request(self):
         """Handle a single HTTP request.
@@ -50,8 +50,11 @@ class handler(BaseHTTPRequestHandler):
                 self.wfile.write("404 Not Found".encode())
             else:
                 try:
-                    body_len = int(self.headers.get('Content-Length'))
-                    body = self.rfile.read(body_len)
+                    body = ''
+                    body_len = self.headers.get('Content-Length')
+                    if body_len is not None:
+                        body_len = int(self.headers.get('Content-Length'))
+                        body = self.rfile.read(body_len)
 
                     query_string = parse_qs(url.query)
                     for key in query_string:
@@ -65,7 +68,7 @@ class handler(BaseHTTPRequestHandler):
 
                     resp = getattr(obj, route_result['action'])()
                     self.send_response(200)
-                    if body in resp:
+                    if 'body' in resp:
                         self.send_json({"code": 0, "msg": resp['body']})
                 except YunError as e:
                     self.send_response(200)
