@@ -48,6 +48,13 @@ class WxApi:
     def send_text(self, text, **kwargs):
         self.send_msg('text', {'content': text}, **kwargs)
 
+    def send_markdown(self, text, **kwargs):
+        self.send_msg('markdown', {'content': text}, **kwargs)
+        
     def send_text_card(self, title, description, url, btn_txt='详情', **kwargs):
-        self.send_msg('textcard', {'title': title, 'description': description, 'url': url, 'btntxt': btn_txt}, **kwargs)
+        self.send_msg('textcard', {
+                      'title': title, 'description': description, 'url': url, 'btntxt': btn_txt}, **kwargs)
 
+    def send_news(self, title, description, url, pic, **kwargs):
+        self.send_msg('news', {'articles': [
+                      {'title': title, 'description': description, 'url': url, 'picurl': pic}]}, **kwargs)
