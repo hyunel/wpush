@@ -15,78 +15,119 @@
 #### 发送消息
 > 若不提供 type 参数将发送普通的文本消息
 
-- 发送文本消息  
+- 发送文本消息
 
-`https://你的云函数地址/send?secret=你配置的密钥&content=测试一下`
+  GET
+
+  
+
+  ```
+  https://你的云函数地址/send?type=text&secret=你配置的密钥&content=这是消息的内容blablablabla
+  ```
+
+  POST /send
+  
+  ```json
+  {
+      "secret": "你配置的密钥",
+      "type":"text",
+      "content": "这是消息的内容blablablabla"
+  }
+  ```
+  
+  
 
 - 发送文本卡片消息  
 
-`https://你的云函数地址/send?secret=你配置的密钥title=测试一下&content=这是消息的内容blablablabla`
+  GET
 
-- 当然, 也可以通过 POST 请求发送
-```json
-POST /send
+  ```
+  https://你的云函数地址/send?secret=你配置的密钥&type=textcard&title=测试一下&content=这是消息的内容blablablabla
+  ```
 
-{
-  "secret": "你配置的密钥",
-  "title": "测试一下",
-  "content": "这是消息的内容blablablabla"
-}
-```
+  POST /send
+
+  ```json
+  {
+      "secret": "你配置的密钥",
+      "type":"textcard",
+      "title":"测试一下",
+      "content": "这是消息的内容blablablabla"
+  }
+  ```
 
 - 你可以添加 `to` `tag` `party` 参数来筛选发送的企业成员
-```json
-POST /send
 
-{
-  "to": "USER_ID1|USER_ID2",
-  "tag": "TAG_ID1|TAG_ID2",
-  "party": "PARTY_ID",
-  "secret": "你配置的密钥",
-  "title": "测试一下",
-  "content": "这是消息的内容blablablabla"
-}
-```
+  ```json
+  {
+      "to": "USER_ID1|USER_ID2",
+      "tag": "TAG_ID1|TAG_ID2",
+      "party": "PARTY_ID",
+      "secret": "你配置的密钥",
+      "type":"textcard",
+      "title":"测试一下",
+      "content": "这是消息的内容blablablabla"
+  }
+  ```
 
-这些参数也可以是数组：
-```json
-POST /send
+  这些参数也可以是数组：
 
-{
-  "to": ["USER_ID1", "USER_ID2"],
-  "tag": ["TAG_ID1", "TAG_ID2"],
-  "party": ["PARTY_ID1", "PARTY_ID2"],
-  "secret": "你配置的密钥",
-  "title": "测试一下",
-  "content": "这是消息的内容blablablabla"
-}
-```
+  ```json
+  {
+      "to": ["USER_ID1", "USER_ID2"],
+      "tag": ["TAG_ID1", "TAG_ID2"],
+      "party": ["PARTY_ID1", "PARTY_ID2"],
+      "secret": "你配置的密钥",
+      "type":"textcard",
+      "title":"测试一下",
+      "content": "这是消息的内容blablablabla"
+  }
+  ```
 
-- 发送markdown消息
+  
 
-```json
-POST /send
+- 发送Markdown消息
 
-{
-  "secret": "你配置的密钥",
-  "type": "markdown",
-  "content": "# 消息标题\n## 二级标题\n> 引用测试\n\n[baidu](https://baidu.com)"
-}
-```
+  GET
+
+  ```
+  https://你的云函数地址/send?secret=你配置的密钥&type=markdown&title=测试一下&content=这是消息的内容blablablabla
+  ```
+
+  POST /send
+  
+  ```json
+  {
+      "secret": "你配置的密钥",
+      "type": "markdown",
+      "content": "# 消息标题\n## 二级标题\n> 引用测试\n\n[baidu](https://baidu.com)"
+  }
+  ```
+  
+  
 
 - 发送图文消息
 
-```json
-POST /send
+  GET
 
-{
-  "secret": "你配置的密钥",
-  "type": "news",
-  "title": "测试一下",
-  "content": "这是消息的内容blablablabla",
-  "pic": "https://cn.bing.com/th?id=OHR.YosemiteNightSky_ZH-CN5864740024_1920x1080.jpg"
-}
-```
+  ```
+  https://你的云函数地址/send?secret=你配置的密钥&type=news&title=测试一下&content=这是消息的内容blablablabla&pic=https://cn.bing.com/th?id=OHR.YosemiteNightSky_ZH-CN5864740024_1920x1080.jpg&url=https://www.baidu.com
+  ```
+
+  POST /send
+
+  ```json
+  {
+      "secret": "你配置的密钥",
+      "type": "news",
+      "title": "测试一下",
+      "content": "这是消息的内容blablablabla",
+      "pic": "https://cn.bing.com/th?id=OHR.YosemiteNightSky_ZH-CN5864740024_1920x1080.jpg",
+      "url":"https://www.baidu.com"
+  }
+  ```
+
+  
 
 #### 展示消息
 > 目前仅提供对卡片消息、图文消息进行展示 
