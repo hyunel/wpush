@@ -13,15 +13,15 @@
 
 ### Get Started
 #### 发送消息
-> 若不提供 content 参数将发送普通的文本消息
+> 若不提供 type 参数将发送普通的文本消息
 
-- 发送一个最简单的消息  
+- 发送文本消息  
 
-`https://你的云函数地址/send?secret=你配置的密钥&tittle=测试一下`
+`https://你的云函数地址/send?secret=你配置的密钥&content=测试一下`
 
-- 发送一个带有内容的卡片消息  
+- 发送文本卡片消息  
 
-`https://你的云函数地址/send?secret=你配置的密钥tittle=测试一下&content=这是消息的内容blablablabla`
+`https://你的云函数地址/send?secret=你配置的密钥title=测试一下&content=这是消息的内容blablablabla`
 
 - 当然, 也可以通过 POST 请求发送
 ```json
@@ -29,7 +29,7 @@ POST /send
 
 {
   "secret": "你配置的密钥",
-  "tittle": "测试一下",
+  "title": "测试一下",
   "content": "这是消息的内容blablablabla"
 }
 ```
@@ -43,7 +43,7 @@ POST /send
   "tag": "TAG_ID1|TAG_ID2",
   "party": "PARTY_ID",
   "secret": "你配置的密钥",
-  "tittle": "测试一下",
+  "title": "测试一下",
   "content": "这是消息的内容blablablabla"
 }
 ```
@@ -57,32 +57,42 @@ POST /send
   "tag": ["TAG_ID1", "TAG_ID2"],
   "party": ["PARTY_ID1", "PARTY_ID2"],
   "secret": "你配置的密钥",
-  "tittle": "测试一下",
+  "title": "测试一下",
   "content": "这是消息的内容blablablabla"
 }
 ```
 
-- 发送一个高级的富文本消息
-> 更多类型的消息可以查看[企业微信文档](https://work.weixin.qq.com/api/doc/90000/90135/90236#%E6%B6%88%E6%81%AF%E7%B1%BB%E5%9E%8B)
+- 发送markdown消息
 
 ```json
-POST /send_rich
+POST /send
 
 {
   "secret": "你配置的密钥",
   "type": "markdown",
-  "data": {
-    "content": "# 消息标题\n## 二级标题\n> 引用测试\n\n[baidu](https://baidu.com)"
-  }
+  "content": "# 消息标题\n## 二级标题\n> 引用测试\n\n[baidu](https://baidu.com)"
 }
 ```
 
+- 发送图文消息
+
+```json
+POST /send
+
+{
+  "secret": "你配置的密钥",
+  "type": "news",
+  "title": "测试一下",
+  "content": "这是消息的内容blablablabla",
+  "pic": "https://cn.bing.com/th?id=OHR.YosemiteNightSky_ZH-CN5864740024_1920x1080.jpg"
+}
+```
 
 #### 展示消息
-> 目前仅提供对卡片消息的展示, 
+> 目前仅提供对卡片消息、图文消息进行展示 
 
 - 使用数据库: `https://你的云函数地址/show/消息ID`
-- 未使用数据库: `https://你的云函数地址/show?t=TIME&h=TITTLE&c=CONTENT`
+- 未使用数据库: `https://你的云函数地址/show?t=TIME&h=TITLE&c=CONTENT`
 
 
 ### 搭建 & 部署

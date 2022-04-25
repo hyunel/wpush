@@ -82,6 +82,7 @@ class MainController:
         content = self.get_param('content')
         pic = self.get_param('pic')
         summary = self.get_param('summary')
+        url = self.get_param('url')
         if not type:
             type = "text"
         if not content:
@@ -93,18 +94,26 @@ class MainController:
 
         if DB:
             msg = DB.insert_message(title, content)
+            if type == "textcard" or type == "news" and not url:
+                url = '{}/show/{}'.format(config.get('sys_url'), msg.safe_id)
             if type == "text":
                 WX_API.send_text(msg.content, **self.spec_send_to())
             elif type == "markdown":
                 WX_API.send_markdown(msg.content, **self.spec_send_to())
             elif type == "textcard":
-                WX_API.send_text_card(msg.title, summary, '{}/show/{}'.format(config.get('sys_url'), msg.safe_id),
+                WX_API.send_text_card(msg.title, summary, url,
                                       **self.spec_send_to())
             elif type == "news":
-                WX_API.send_news(msg.title, summary, '{}/show/{}'.format(config.get('sys_url'), msg.safe_id), pic,
+                WX_API.send_news(msg.title, summary, url, pic,
                                  **self.spec_send_to())
             return {"body": {"code": 0, "msg_id": msg.safe_id}}
         else:
+            if type == "textcard" or type == "news" and not url:
+                url = '{}/show?t={}&h={}&c={}'.format(
+                    config.get('sys_url'),
+                    int(time.time()*1000),
+                    quote(title, encoding='utf-8'),
+                    quote(content, encoding='utf-8')[:1900])
             if type == "text":
                 self.verify_params('content')
                 WX_API.send_text(content, **self.spec_send_to())
@@ -114,18 +123,12 @@ class MainController:
             elif type == "textcard":
                 self.verify_params('title')
                 self.verify_params('content')
-                WX_API.send_text_card(title, summary, '{}/show?t={}&h={}&c={}'.format(
-                    config.get('sys_url'),
-                    int(time.time()*1000),
-                    quote(title, encoding='utf-8'),
-                    quote(content, encoding='utf-8')[:1900]), **self.spec_send_to())
+                WX_API.send_text_card(
+                    title, summary, url, **self.spec_send_to())
             elif type == "news":
                 self.verify_params('title')
-                WX_API.send_news(title, summary, '{}/show?t={}&h={}&c={}'.format(
-                    config.get('sys_url'),
-                    int(time.time()*1000),
-                    quote(title, encoding='utf-8'),
-                    quote(content, encoding='utf-8')[:1900]), pic, **self.spec_send_to())
+                WX_API.send_news(title, summary, url, pic,
+                                 **self.spec_send_to())
             return {"body": {"code": 0}}
 
     def show_msg(self):
