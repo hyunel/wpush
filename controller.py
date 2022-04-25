@@ -94,7 +94,7 @@ class MainController:
 
         if DB:
             msg = DB.insert_message(title, content)
-            if type == "textcard" or type == "news" and not url:
+            if not url and type == "textcard" or type == "news":
                 url = '{}/show/{}'.format(config.get('sys_url'), msg.safe_id)
             if type == "text":
                 WX_API.send_text(msg.content, **self.spec_send_to())
@@ -108,7 +108,7 @@ class MainController:
                                  **self.spec_send_to())
             return {"body": {"code": 0, "msg_id": msg.safe_id}}
         else:
-            if type == "textcard" or type == "news" and not url:
+            if not url and type == "textcard" or type == "news":
                 url = '{}/show?t={}&h={}&c={}'.format(
                     config.get('sys_url'),
                     int(time.time()*1000),
