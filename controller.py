@@ -92,10 +92,13 @@ class MainController:
         if not pic and type == "news":
             pic = get_bing()
 
+        # 数据库部分待测试
         if DB:
             msg = DB.insert_message(title, content)
-            if not url and type == "textcard" or type == "news":
-                url = '{}/show/{}'.format(config.get('sys_url'), msg.safe_id)
+            if type == "textcard" or type == "news":
+                if not url:
+                    url = '{}/show/{}'.format(config.get('sys_url'),
+                                              msg.safe_id)
             if type == "text":
                 WX_API.send_text(msg.content, **self.spec_send_to())
             elif type == "markdown":
@@ -108,12 +111,13 @@ class MainController:
                                  **self.spec_send_to())
             return {"body": {"code": 0, "msg_id": msg.safe_id}}
         else:
-            if not url and type == "textcard" or type == "news":
-                url = '{}/show?t={}&h={}&c={}'.format(
-                    config.get('sys_url'),
-                    int(time.time()*1000),
-                    quote(title, encoding='utf-8'),
-                    quote(content, encoding='utf-8')[:1900])
+            if type == "textcard" or type == "news":
+                if not url:
+                    url = '{}/show?t={}&h={}&c={}'.format(
+                        config.get('sys_url'),
+                        int(time.time()*1000),
+                        quote(title, encoding='utf-8'),
+                        quote(content, encoding='utf-8')[:1900])
             if type == "text":
                 self.verify_params('content')
                 WX_API.send_text(content, **self.spec_send_to())
