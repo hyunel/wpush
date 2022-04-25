@@ -13,20 +13,33 @@
 
 ### Get Started
 #### 发送消息
-> 若不提供 type 参数将发送普通的文本消息
+- 参数说明
 
+  |  参数   |                           说明                           |
+  | :-----: | :------------------------------------------------------: |
+  |  type   |                    消息类型，默认text                    |
+  |  title  |             标题，在textcard、news类型中必填             |
+  | content |             内容，在text、markdown类型中必填             |
+  |   url   | 跳转链接，默认展示消息页面<br>仅markdown、news类型中生效 |
+  |   pic   |         图片，默认Bing每日一图，仅news类型中显示         |
+
+  | type参数 |      说明      |
+  | :------: | :------------: |
+  |   text   | 文本消息，默认 |
+  | textcard |  文本卡片消息  |
+  | markdown |  markdown消息  |
+  |   news   |    图文消息    |
+  
 - 发送文本消息
 
   GET
 
-  
-
   ```
   https://你的云函数地址/send?type=text&secret=你配置的密钥&content=这是消息的内容blablablabla
   ```
-
-  POST /send
   
+  POST /send
+
   ```json
   {
       "secret": "你配置的密钥",
@@ -36,7 +49,7 @@
   ```
   
   
-
+  
 - 发送文本卡片消息  
 
   GET
