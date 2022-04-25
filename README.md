@@ -107,8 +107,10 @@
   https://你的云函数地址/send?secret=你配置的密钥&type=markdown&title=测试一下&content=这是消息的内容blablablabla
   ```
 
+  > 使用GET方法传输markdown语法内容可能会导致content参数无法获取，建议使用POST方法
+
   POST /send
-  
+
   ```json
   {
       "secret": "你配置的密钥",
@@ -116,7 +118,7 @@
       "content": "# 消息标题\n## 二级标题\n> 引用测试\n\n[baidu](https://baidu.com)"
   }
   ```
-  
+
   
 
 - 发送图文消息
@@ -140,7 +142,9 @@
   }
   ```
 
-  
+  > 暂时只支持单个图文消息推送
+  >
+  > 跳转链接url可能因为微信官方规则而无法访问
 
 #### 展示消息
 > 目前仅提供对卡片消息、图文消息进行展示 
