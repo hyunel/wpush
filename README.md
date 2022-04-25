@@ -157,5 +157,17 @@
 > **2022-04-23 更新**:  
 > 因为腾讯云函数 5 月 23 日后不再提供免费额度，不建议再使用 [腾讯云函数搭建](docs/scf.md)  
 > 推荐使用 **Vercel** 作为替代，目前已添加对 **Vercel** 的支持
+>
+> **参数说明**
+>
+> |    参数     |                             说明                             |
+> | :---------: | :----------------------------------------------------------: |
+> |   SYS_URL   | 系统访问地址<br>https://[你起的仓库名]-[你的vercel用户名].vercel.app |
+> | API_SECRET  |     API访问密钥，随意设置<br>发起请求时作为secret属性值      |
+> |   CORP_ID   |                        企业微信公司ID                        |
+> | CORP_SECRET |                      企业微信应用Secret                      |
+> |  AGENT_ID   |                        企业微信应用ID                        |
+
+- 建议右键新页面打开下面按钮
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhyunel%2Fwpush&env=SYS_URL,API_SECRET,CORP_ID,CORP_SECRET,AGENT_ID&envDescription=Configuration%20needed%20for%20WPush&envLink=https%3A%2F%2Fgithub.com%2Fhyunel%2Fwpush%2Fblob%2Fmaster%2Fconfig.py&project-name=wpush&repo-name=wpush)
