@@ -137,7 +137,7 @@ class MainController:
                 self.verify_params('title')
                 WX_API.send_news(title, summary, url, pic,
                                  **self.spec_send_to())
-            return {"body": {"code": 0}}
+            return {"body": {"code": 0, "url": url}}
 
     def show_msg(self):
         if not DB:
