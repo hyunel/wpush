@@ -35,7 +35,7 @@
   GET
 
   ```
-  https://你的云函数地址/send?type=text&secret=你配置的密钥&content=这是消息的内容blablablabla
+  https://你的云函数地址/send?secret=你配置的密钥&type=text&content=这是消息的内容blablablabla
   ```
   
   POST /send
