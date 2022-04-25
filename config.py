@@ -4,7 +4,7 @@
 # 1. 消息长度支持超过 1000, 否则消息内容将存储在 url 的参数中, 超过最大长度将截断
 # 2. 消息发送统计, 字数统计, 时间统计等
 SYS_CONFIG = {
-    # *系统访问地址, 最后不需要加【/】，环境变量 SYS_URL (如果是 Vecel 部署一般是 https://[你起的仓库名].vercel.app 当然也可以部署完之后再改)
+    # *系统访问地址, 最后不需要加【/】，环境变量 SYS_URL (如果是 Vercel 部署一般是 https://[你起的仓库名]-[你的vercel用户名].vercel.app 当然也可以部署完之后再改)
     "sys_url": "https://service-xxxxx-xxxxx.xxxxx.apigw.tencentcs.com",
     # *API访问密钥, 请务必修改默认值, 系统认证的唯一方式，环境变量 API_SECRET
     "api_secret": "XXXXXXXXXXXXXXXX",
