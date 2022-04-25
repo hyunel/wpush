@@ -85,6 +85,8 @@ class MainController:
         url = self.get_param('url')
         if not type:
             type = "text"
+        if not title:
+            title = "No Title"
         if not content:
             content = "No Content"
         if not summary:
