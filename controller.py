@@ -91,6 +91,8 @@ class MainController:
             summary = content[:128] + '...' if len(content) > 128 else content
         if not pic and type == "news":
             pic = get_bing()
+        print('url1')
+        print(url)
 
         # 数据库部分待测试
         if DB:
@@ -118,6 +120,8 @@ class MainController:
                         int(time.time()*1000),
                         quote(title, encoding='utf-8'),
                         quote(content, encoding='utf-8')[:1900])
+            print('url2')
+            print(url)
             if type == "text":
                 self.verify_params('content')
                 WX_API.send_text(content, **self.spec_send_to())
