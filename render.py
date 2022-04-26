@@ -34,19 +34,19 @@ html = '''
             white-space: pre-wrap;
             word-break: break-all;
         }
-        .tittle {
+        .title {
             font-size: 22px;
             margin: 6px 0;
         }
         @media screen and (min-width: 768px) {
-            .tittle {
+            .title {
                 font-size: 28px;
             }
         }
     </style>
 </head>
 <body>
-    <h1 class="tittle"><%TITTLE%/></h1>
+    <h1 class="title"><%TITLE%/></h1>
     <div class="metabar">
         <div class="time"><i class="fa fa-clock-o"></i><span class="inner"><%TIME%/></span></div>
         <div class="count"><i class="fa fa-pencil"></i><span class="inner">0</span>字</div>
@@ -63,7 +63,7 @@ html = '''
 
     if(params.has('t') && params.has('h') && params.has('c')) {
         document.querySelector('pre').innerText=params.get('c')
-        document.querySelector('.tittle').innerText=params.get('h')
+        document.querySelector('.title').innerText=params.get('h')
         document.querySelector('.time .inner').innerText=moment(parseInt(params.get('t'))).format('YYYY-MM-DD hh:mm:ss')
     }
 
@@ -75,10 +75,10 @@ html = '''
 
 
 # 这里可能会有效率问题, 不值得上模板渲染引擎了, 直接简单替换
-def show(tittle, content, time):
-    return html.replace('<%TITTLE%/>', tittle).replace('<%CONTENT%/>', content).replace('<%TIME%/>', time)
+def show(title, content, time):
+    return html.replace('<%TITLE%/>', title).replace('<%CONTENT%/>', content).replace('<%TIME%/>', time)
 
 
 def show_param():
-    return html.replace('<%TITTLE%/>', '消息加载中, 请稍候').replace('<%CONTENT%/>', '').replace('<%TIME%/>', '')
+    return html.replace('<%TITLE%/>', '消息加载中, 请稍候').replace('<%CONTENT%/>', '').replace('<%TIME%/>', '')
 

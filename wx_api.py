@@ -44,12 +44,6 @@ class WxApi:
 
         if ret['errcode'] != 0:
             raise ApiError(ret['errmsg'])
-
-    def send_text(self, text, **kwargs):
-        self.send_msg('text', {'content': text}, **kwargs)
-
-    def send_markdown(self, text, **kwargs):
-        self.send_msg('markdown', {'content': text}, **kwargs)
         
     def send_text_card(self, title, description, url, btn_txt='详情', **kwargs):
         self.send_msg('textcard', {

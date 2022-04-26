@@ -36,12 +36,12 @@ class MainController:
         if route_result['secret'] and self.get_param('secret') != config.get('api_secret'):
             raise BadRequestError('请求密钥不正确')
 
-    def get_param(self, name):
+    def get_param(self, name, default=None):
         if name in self.event['queryString']:
             return self.event['queryString'][name]
         if name in self.event['body']:
             return self.event['body'][name]
-        return None
+        return default
 
     def verify_params(self, *args):
         for arg in args:
@@ -76,66 +76,55 @@ class MainController:
         return {"body": "WPush 已成功搭建~"}
 
     def send_msg(self):
-        # TODO 更多消息类型的支持
-        type = self.get_param('type')
-        title = self.get_param('title')
-        content = self.get_param('content')
-        pic = self.get_param('pic')
-        summary = self.get_param('summary')
-        url = self.get_param('url')
-        if not type:
-            type = "text"
-        if not title:
-            title = "No Title"
-        if not content:
-            content = "No Content"
-        if not summary:
-            summary = content[:128] + '...' if len(content) > 128 else content
-        if not pic and type == "news":
-            pic = get_bing()
+        resp = {"body": {"code": 0}}
+        msg_type = self.get_param('type')
 
-        # 数据库部分待测试
-        if DB:
-            msg = DB.insert_message(title, content)
-            if type == "textcard" or type == "news":
-                if not url:
-                    url = '{}/show/{}'.format(config.get('sys_url'),
-                                              msg.safe_id)
-            if type == "text":
-                WX_API.send_text(msg.content, **self.spec_send_to())
-            elif type == "markdown":
-                WX_API.send_markdown(msg.content, **self.spec_send_to())
-            elif type == "textcard":
-                WX_API.send_text_card(msg.title, summary, url,
-                                      **self.spec_send_to())
-            elif type == "news":
-                WX_API.send_news(msg.title, summary, url, pic,
-                                 **self.spec_send_to())
-            return {"body": {"code": 0, "msg_id": msg.safe_id}}
-        else:
-            if type == "textcard" or type == "news":
-                if not url:
+        # 有标题默认发卡片消息，没有标题发普通文本消息
+        if msg_type is None and self.get_param('content'):
+            msg_type = 'text'
+            if self.get_param('title'):
+                msg_type = 'textcard'
+
+        if msg_type is None:
+            raise BadRequestError('请提供消息内容(content) 或指定消息类型(type)')
+
+        if msg_type == "textcard" or msg_type == "news":
+            self.verify_params('title', 'content')
+
+            url = self.get_param('url')
+            title = self.get_param('title')
+            content = self.get_param('content')
+            summary = self.get_param('summary', default=content[:128] + '...' if len(content) > 128 else content)
+
+            if not url:
+                if DB:
+                    msg = DB.insert_message(title, content)
+                    url = '{}/show/{}'.format(config.get('sys_url'), msg.safe_id)
+                    resp['body']['msg_id'] = msg.safe_id
+                else:
                     url = '{}/show?t={}&h={}&c={}'.format(
                         config.get('sys_url'),
                         int(time.time()*1000),
                         quote(title, encoding='utf-8'),
                         quote(content, encoding='utf-8')[:1900])
-            if type == "text":
-                self.verify_params('content')
-                WX_API.send_text(content, **self.spec_send_to())
-            elif type == "markdown":
-                self.verify_params('content')
-                WX_API.send_markdown(content, **self.spec_send_to())
-            elif type == "textcard":
-                self.verify_params('title')
-                self.verify_params('content')
-                WX_API.send_text_card(
-                    title, summary, url, **self.spec_send_to())
-            elif type == "news":
-                self.verify_params('title')
+
+            if msg_type == "news":
+                pic = self.get_param('pic', default=get_bing())
+
                 WX_API.send_news(title, summary, url, pic,
                                  **self.spec_send_to())
-            return {"body": {"code": 0}}
+
+            if msg_type == 'textcard':
+                WX_API.send_text_card(
+                    title, summary, url, **self.spec_send_to())
+        else:
+            params = {}
+            params.update(self.event['queryString'])
+            params.update(self.event['body'])
+
+            WX_API.send_msg(msg_type, params, **self.spec_send_to())
+
+        return resp
 
     def show_msg(self):
         if not DB:

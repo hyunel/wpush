@@ -69,17 +69,17 @@ class handler(BaseHTTPRequestHandler):
                         'queryString': query_string
                     }, route_result)
 
-                    resp = getattr(obj, route_result['action'])()
+                    resp = {"code": 0, "msg": None}
+                    result = getattr(obj, route_result['action'])()
+
                     self.send_response(200)
-
-                    if 'body' in resp:
-                        if type(resp['body']) is dict:
-                            self.send_json({"code": 0, "msg": resp['body']})
-                        elif type(resp['body']) is str:
-                            self.send_text(resp['body'])
+                    if 'body' in result and type(result['body']) is dict:
+                        resp.update(result['body'])
+                        self.send_json(resp)
+                    elif 'body' in result and type(result['body']) is str:
+                        self.send_text(result['body'])
                     else:
-                        self.send_json({"code": 0, "msg": None})
-
+                        self.send_json(resp)
                 except YunError as e:
                     self.send_response(200)
                     self.send_json({"code": e.code, "msg": e.message})

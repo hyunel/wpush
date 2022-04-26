@@ -19,12 +19,12 @@ class Message(Base):
     __tablename__ = 'detail_message'  # 表名
     id = Column(Integer, primary_key=True, autoincrement=True)
     safe_id = Column(String(40), index=True, unique=True, nullable=False, default=gen_safe_id)
-    tittle = Column(String(255), nullable=False)
+    title = Column(String(255), nullable=False)
     content = Column(MEDIUMTEXT(), nullable=False)
     time = Column(DateTime(), server_default=text('NOW()'))
 
-    def __init__(self, tittle, content):
-        self.tittle = tittle
+    def __init__(self, title, content):
+        self.title = title
         self.content = content
 
 
@@ -39,8 +39,8 @@ class Db:
         session = sessionmaker(bind=engine)
         self.session = session()
 
-    def insert_message(self, tittle, content):
-        msg = Message(tittle, content)
+    def insert_message(self, title, content):
+        msg = Message(title, content)
         self.session.add(msg)
         self.session.commit()
         return msg

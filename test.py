@@ -10,7 +10,7 @@ print(main_handler({
     "httpMethod": "POST",
     "queryString": {
         "secret": config.get('api_secret'),
-        "tittle": "dbg---OK"
+        "title": "dbg---OK"
     }
 }, None))
 
@@ -20,7 +20,7 @@ result = main_handler({
     "httpMethod": "POST",
     "queryString": {
         "secret": config.get('api_secret'),
-        "tittle": "dbg---OK",
+        "title": "dbg---OK",
         "content": "这是卡片消息"
     }
 }, None)
