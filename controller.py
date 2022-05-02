@@ -73,7 +73,7 @@ class MainController:
 
     def index(self):
         # TODO 主页渲染
-        return {"body": "WPush 已成功搭建~"}
+        return {"body": render.show_index()}
 
     def send_msg(self):
         resp = {"body": {"code": 0}}
@@ -94,12 +94,14 @@ class MainController:
             url = self.get_param('url')
             title = self.get_param('title')
             content = self.get_param('content')
-            summary = self.get_param('summary', default=content[:128] + '...' if len(content) > 128 else content)
+            summary = self.get_param(
+                'summary', default=content[:128] + '...' if len(content) > 128 else content)
 
             if not url:
                 if DB:
                     msg = DB.insert_message(title, content)
-                    url = '{}/show/{}'.format(config.get('sys_url'), msg.safe_id)
+                    url = '{}/show/{}'.format(config.get('sys_url'),
+                                              msg.safe_id)
                     resp['body']['msg_id'] = msg.safe_id
                 else:
                     url = '{}/show?t={}&h={}&c={}'.format(
@@ -107,7 +109,7 @@ class MainController:
                         int(time.time()*1000),
                         quote(title, encoding='utf-8'),
                         quote(content, encoding='utf-8')[:1900])
-
+            resp['body']['link'] = url
             if msg_type == "news":
                 pic = self.get_param('pic', default=get_bing())
 
