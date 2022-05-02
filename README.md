@@ -13,22 +13,30 @@
 
 ### Get Started
 #### 发送消息
+
+> GET请求可能会因消息内容过长而无法全部显示，如需长文推送请使用POST方法，配置数据库可以进一步提升消息内容长度。
+>
+> POST请求时使用JSON格式，参数字段名称与GET请求一致。
+>
+> 更多细节说明请参考[企业微信API](https://developer.work.weixin.qq.com/document/path/90372)
+
 - 参数说明
 
-  |  参数   |                           说明                           |
-  | :-----: | :------------------------------------------------------: |
-  |  type   |                    消息类型，默认text                    |
-  |  title  |             标题，在textcard、news类型中必填             |
-  | content |             内容，在text、markdown类型中必填             |
-  |   url   | 跳转链接，默认展示消息页面<br>仅markdown、news类型中生效 |
-  |   pic   |         图片，默认Bing每日一图，仅news类型中显示         |
-
-  | type参数 |      说明      |
-  | :------: | :------------: |
-  |   text   | 文本消息，默认 |
-  | textcard |  文本卡片消息  |
-  | markdown |  markdown消息  |
-  |   news   |    图文消息    |
+  |  参数   |                             说明                             |
+  | :-----: | :----------------------------------------------------------: |
+  |  type   |  消息类型，无标题参数时默认text<br>有标题参数时默认textcard  |
+  |  title  |               标题，在textcard、news类型中必填               |
+  | content |                        消息内容，必填                        |
+  | summary |              摘要，默认消息内容前128个字节内容               |
+  |   url   | 跳转链接，默认展示消息页面<br>仅textcard、news类型中有效<br>填写时请确保包含了协议头（http/https） |
+  |   pic   |           图片，默认Bing每日一图，仅news类型中显示           |
+  
+  | type参数 |     说明     |
+  | :------: | :----------: |
+  |   text   |   文本消息   |
+  | textcard | 文本卡片消息 |
+  | markdown | markdown消息 |
+  |   news   |   图文消息   |
   
 - 发送文本消息
 
@@ -55,16 +63,17 @@
   GET
 
   ```
-  https://你的云函数地址/send?secret=你配置的密钥&type=textcard&title=测试一下&content=这是消息的内容blablablabla
+  https://你的云函数地址/send?secret=你配置的密钥&type=textcard&title=这是标题&summary=这是摘要&content=这是消息的内容blablablabla
   ```
 
   POST /send
 
   ```json
   {
-      "secret": "你配置的密钥",
+      "secret": "vanmay",
       "type":"textcard",
-      "title":"测试一下",
+      "title":"这是标题",
+      "summary":"这是摘要",
       "content": "这是消息的内容blablablabla"
   }
   ```
@@ -78,7 +87,7 @@
       "party": "PARTY_ID",
       "secret": "你配置的密钥",
       "type":"textcard",
-      "title":"测试一下",
+      "title":"这是标题",
       "content": "这是消息的内容blablablabla"
   }
   ```
@@ -92,7 +101,7 @@
       "party": ["PARTY_ID1", "PARTY_ID2"],
       "secret": "你配置的密钥",
       "type":"textcard",
-      "title":"测试一下",
+      "title":"这是标题",
       "content": "这是消息的内容blablablabla"
   }
   ```
@@ -104,7 +113,7 @@
   GET
 
   ```
-  https://你的云函数地址/send?secret=你配置的密钥&type=markdown&title=测试一下&content=这是消息的内容blablablabla
+  https://你的云函数地址/send?secret=你配置的密钥&type=markdown&content=这是消息的内容blablablabla
   ```
 
   > 使用GET方法传输markdown语法内容可能会导致content参数无法获取，建议使用POST方法
@@ -126,25 +135,26 @@
   GET
 
   ```
-  https://你的云函数地址/send?secret=你配置的密钥&type=news&title=测试一下&content=这是消息的内容blablablabla&pic=https://cn.bing.com/th?id=OHR.YosemiteNightSky_ZH-CN5864740024_1920x1080.jpg&url=https://www.baidu.com
+  https://你的云函数地址/send?secret=你配置的密钥&type=news&title=这是标题&summary=这是摘要&content=这是消息的内容blablablabla&pic=https://cn.bing.com/th?id=OHR.YosemiteNightSky_ZH-CN5864740024_1920x1080.jpg&url=https://www.baidu.com
   ```
 
   POST /send
 
   ```json
   {
-      "secret": "你配置的密钥",
+      "secret": "vanmay",
       "type": "news",
-      "title": "测试一下",
+      "title": "这是标题",
+      "summary":"这是摘要",
       "content": "这是消息的内容blablablabla",
       "pic": "https://cn.bing.com/th?id=OHR.YosemiteNightSky_ZH-CN5864740024_1920x1080.jpg",
       "url":"https://www.baidu.com"
   }
   ```
-
+  
   > 暂时只支持单个图文消息推送
   >
-  > 跳转链接url可能因为微信官方规则而无法访问
+  > 跳转链接url可能因为微信官方限制而无法访问
 
 #### 展示消息
 
@@ -163,11 +173,15 @@
 
   |    参数     |                             说明                             |
   | :---------: | :----------------------------------------------------------: |
-  |   SYS_URL   | 系统访问地址<br>https://[你起的仓库名]-[你的vercel用户名].vercel.app |
-  | API_SECRET  |     API访问密钥，随意设置<br>发起请求时作为secret属性值      |
-  |   CORP_ID   |                        企业微信公司ID                        |
-  | CORP_SECRET |                      企业微信应用Secret                      |
-  |  AGENT_ID   |                        企业微信应用ID                        |
+  |   SYS_URL   | 系统访问地址，必填<br>https://[你起的仓库名]-[你的vercel用户名].vercel.app |
+  | API_SECRET  | API访问密钥，必填，随意设置<br>发起请求时作为secret属性值携带 |
+  |   CORP_ID   |                     企业微信公司ID，必填                     |
+  | CORP_SECRET |                   企业微信应用Secret，必填                   |
+  |  AGENT_ID   |                     企业微信应用ID，必填                     |
+  |   DB_ADDR   |                       MYSQL 数据库地址                       |
+  |   DB_USER   |                         数据库用户名                         |
+  |   DB_PWD    |                          数据库密码                          |
+  |   DB_NAME   |                           数据库名                           |
 
 
 - 建议右键点击下面按钮新页面打开链接
