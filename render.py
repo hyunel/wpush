@@ -54,6 +54,11 @@ index_html = '''
                                     :disabled="disabled">
                                 </el-input>
                             </el-form-item>
+                            <el-form-item label-width="0" prop="summary" v-show="type =='textcard'||type=='news'">
+                                <el-input v-model="formData.summary" placeholder="摘要" clearable :style="{width: '100%'}"
+                                    :disabled="disabled">
+                                </el-input>
+                            </el-form-item>
                             <el-form-item label-width="0" prop="content">
                                 <el-input v-model="formData.content" type="textarea" placeholder="内容"
                                     :autosize="{minRows: 4, maxRows: 4}" :style="{width: '100%'}" :disabled="disabled">
@@ -78,6 +83,7 @@ index_html = '''
         padding: 0;
         box-sizing: border-box;
     }
+
     body {
         background: linear-gradient(to bottom right, #0184cf, #77A1D3, #a0eacf);
     }
@@ -133,6 +139,7 @@ index_html = '''
     .el-textarea__inner {
         border-radius: 20px !important;
     }
+
     .el-message-box {
         width: 300px;
     }
@@ -153,6 +160,7 @@ index_html = '''
                 formData: {
                     secret: undefined,
                     title: undefined,
+                    summary: undefined,
                     content: undefined,
                     pic: undefined,
                     url: undefined,
@@ -182,6 +190,11 @@ index_html = '''
                     title: [{
                         required: false,
                         message: '内容',
+                        trigger: 'blur'
+                    }],
+                    summary: [{
+                        required: false,
+                        message: '摘要',
                         trigger: 'blur'
                     }],
                     content: [{
@@ -224,7 +237,7 @@ index_html = '''
                     if (!valid) {
                         this.disabled = false
                         this.submitInfo = "发送"
-                        this.showErrorConfirm("校验失败，请核实参数")
+                        this.showErrorConfirm("校验失败，请完整填写参数")
                     }
                     else {
                         axios({
