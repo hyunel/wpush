@@ -20,7 +20,7 @@ index_html = '''
     <div id="app">
         <!-- 发送消息 -->
         <section>
-            <div class="con2">
+            <div class="container">
                 <div class="form">
                     <h2>WPUSH</h2>
                     <div>
@@ -103,7 +103,7 @@ index_html = '''
     }
 
 
-    .con2 {
+    .container {
         position: relative;
         width: 360px;
         min-height: 400px;
@@ -321,7 +321,7 @@ info_html = '''
     <div id="app">
         <!-- 显示消息 -->
         <section>
-            <div class="con1">
+            <div class="container">
                 <h2 class="title">
                     <%TITLE%/>
                 </h2>
@@ -352,7 +352,7 @@ info_html = '''
         background: linear-gradient(to bottom right, #0184cf, #77A1D3, #a0eacf);
     }
 
-    .con1 {
+    .container {
         width: 90%;
     }
 
@@ -380,6 +380,7 @@ info_html = '''
         white-space: pre-wrap;
         word-break: break-all;
         margin: 0px;
+        font-size: 14px;
     }
 
     .title {
