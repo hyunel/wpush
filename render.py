@@ -50,17 +50,17 @@ index_html = '''
                                 </el-input>
                             </el-form-item>
                             <el-form-item label-width="0" prop="title" v-show="type =='textcard'||type=='news'">
-                                <el-input v-model="formData.title" placeholder="标题" clearable :style="{width: '100%'}"
+                                <el-input v-model="formData.title" placeholder="消息标题" clearable :style="{width: '100%'}"
                                     :disabled="disabled">
                                 </el-input>
                             </el-form-item>
                             <el-form-item label-width="0" prop="summary" v-show="type =='textcard'||type=='news'">
-                                <el-input v-model="formData.summary" placeholder="摘要" clearable :style="{width: '100%'}"
+                                <el-input v-model="formData.summary" placeholder="消息摘要" clearable :style="{width: '100%'}"
                                     :disabled="disabled">
                                 </el-input>
                             </el-form-item>
                             <el-form-item label-width="0" prop="content">
-                                <el-input v-model="formData.content" type="textarea" placeholder="内容"
+                                <el-input v-model="formData.content" type="textarea" placeholder="消息内容"
                                     :autosize="{minRows: 4, maxRows: 4}" :style="{width: '100%'}" :disabled="disabled">
                                 </el-input>
                             </el-form-item>
@@ -169,37 +169,37 @@ index_html = '''
                 rules: {
                     secret: [{
                         required: true,
-                        message: '秘钥',
+                        message: '请输入秘钥',
                         trigger: 'blur'
                     }],
                     type: [{
                         required: true,
-                        message: '消息类型',
+                        message: '请选择消息类型',
                         trigger: 'change'
                     }],
                     pic: [{
                         required: false,
-                        message: '图片链接',
+                        message: '请输入图片链接',
                         trigger: 'blur'
                     }],
                     url: [{
                         required: false,
-                        message: '跳转链接',
+                        message: '请输入跳转链接',
                         trigger: 'blur'
                     }],
                     title: [{
                         required: false,
-                        message: '内容',
+                        message: '请输入消息标题',
                         trigger: 'blur'
                     }],
                     summary: [{
                         required: false,
-                        message: '摘要',
+                        message: '请输入消息摘要',
                         trigger: 'blur'
                     }],
                     content: [{
                         required: true,
-                        message: '内容',
+                        message: '请输入消息内容',
                         trigger: 'blur'
                     }],
                 },

@@ -3,19 +3,18 @@
 # 不配置数据库的话也是可以使用的, 但是配置数据库后将支持:
 # 1. 消息长度支持超过 1000, 否则消息内容将存储在 url 的参数中, 超过最大长度将截断
 # 2. 消息发送统计, 字数统计, 时间统计等
+import os
 SYS_CONFIG = {
     # *系统访问地址, 最后不需要加【/】，环境变量 SYS_URL (如果是 Vercel 部署一般是 https://[你起的仓库名]-[你的vercel用户名].vercel.app 当然也可以部署完之后再改)
-    "sys_url": "https://service-xxxxx-xxxxx.xxxxx.apigw.tencentcs.com",
+    "sys_url": "",
     # *API访问密钥, 请务必修改默认值, 系统认证的唯一方式，环境变量 API_SECRET
-    "api_secret": "XXXXXXXXXXXXXXXX",
-    # MYSQL 数据库地址，环境变量 DB_ADDR
-    "db_addr": "",
-    # 数据库用户名，环境变量 DB_USER
-    "db_user": "wxpush",
-    # 数据库密码，环境变量 DB_PWD
-    "db_pwd": "",
-    # 数据库名，环境变量 DB_NAME
-    "db_name": "wxpush"
+    "api_secret": "",
+    # 数据库类型，可选项：mongodb/mysql
+    "db_type": "",
+    # 数据库完整连接地址
+    # mysql示例：mysql+mysqlconnector://[数据库用户名]:[数据库密码]@[数据库地址]:3306/[数据库名]?charset=utf8mb4
+    # mongodb示例：mongodb+srv://[数据库用户名]:[数据库密码]@[数据库地址]/[数据库名]?retryWrites=true&w=majority
+    "db_link": ""
 }
 
 WX_CONFIG = {
@@ -29,7 +28,6 @@ WX_CONFIG = {
 
 
 # 忽略下面的部分
-import os
 
 
 def get(key: str):

@@ -1,15 +1,15 @@
-<div align=center><img src="docs/phone.jpg" width="400" alt="phone2"/></div>
+<div align=center><img src="docs/phone.jpg" width="600" alt="phone2"/></div>
 
 <h1 align="center">WPush</h1>
 <h6 align="center">使用云函数搭建属于自己的推送服务</h6>
 
 
 ### Feature
-- :tada: 超长消息持久化储存  
-- :tada: 简单易用的 API 接口  
-- :tada: 支持所有类型消息推送  
-- :tada: 可选的数据库支持  
-- :tada: 免维护, 一次部署稳定使用
+- :tada: 超长消息持久化储存
+- :tada: 简单易用的 API 接口
+- :tada: 支持多种类型消息推送
+- :tada: 可选的数据库（MongoDB/MySQL）支持
+- :tada: 免维护，一次部署稳定使用
 
 ### Get Started
 #### 发送消息
@@ -25,11 +25,11 @@
   |  参数   |                             说明                             |
   | :-----: | :----------------------------------------------------------: |
   |  type   |  消息类型，无标题参数时默认text<br>有标题参数时默认textcard  |
-  |  title  |               标题，在textcard、news类型中必填               |
+  |  title  |             消息标题，在textcard、news类型中必填             |
   | content |                        消息内容，必填                        |
-  | summary |              摘要，默认消息内容前128个字节内容               |
-  |   url   | 跳转链接，默认展示消息页面<br>仅textcard、news类型中有效<br>填写时请确保包含了协议头（http/https） |
-  |   pic   |           图片，默认Bing每日一图，仅news类型中显示           |
+  | summary |       消息摘要，非必填<br>默认消息内容前128个字节内容        |
+  |   url   | 跳转链接，非必填，默认展示消息页面<br>仅textcard、news类型中有效<br>填写时请确保包含了协议头（http/https） |
+  |   pic   |    图片链接，非必填<br>默认Bing每日一图，仅news类型中显示    |
   
   | type参数 |     说明     |
   | :------: | :----------: |
@@ -154,7 +154,7 @@
   
   > 暂时只支持单个图文消息推送
   >
-  > 跳转链接url可能因为微信官方限制而无法访问
+  > 跳转链接url可能因微信官方限制而无法访问
 
 #### 展示消息
 
@@ -178,12 +178,10 @@
   |   CORP_ID   |                     企业微信公司ID，必填                     |
   | CORP_SECRET |                   企业微信应用Secret，必填                   |
   |  AGENT_ID   |                     企业微信应用ID，必填                     |
-  |   DB_ADDR   |                       MYSQL 数据库地址                       |
-  |   DB_USER   |                         数据库用户名                         |
-  |   DB_PWD    |                          数据库密码                          |
-  |   DB_NAME   |                           数据库名                           |
+  |   DB_TYPE   |        数据库类型，非必填<br>填写请选择mysql或mongodb        |
+  |   DB_LINK   | 数据库完整连接地址，非必填<br>mysql示例：mysql+mysqlconnector://[数据库用户名]:[数据库密码]@[数据库地址]:3306/[数据库名]?charset=utf8mb4<br>mongodb示例：mongodb+srv://[数据库用户名]:[数据库密码]@[数据库地址]/[数据库名]?retryWrites=true&w=majority |
 
 
-- 建议右键点击下面按钮新页面打开链接
+- 建议右键点击下方按钮新页面打开链接完成部署
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fhyunel%2Fwpush&env=SYS_URL,API_SECRET,CORP_ID,CORP_SECRET,AGENT_ID&envDescription=Configuration%20needed%20for%20WPush&envLink=https%3A%2F%2Fgithub.com%2Fhyunel%2Fwpush%2Fblob%2Fmaster%2Fconfig.py&project-name=wpush&repo-name=wpush)

@@ -2,14 +2,23 @@ import json
 import time
 from urllib.parse import quote
 
-from db import Db
+from db import MysqlOp
+from db import MongoDBOp
 import config
 from wx_api import WxApi
 from errors import *
 import render
 import requests
 
-DB = Db() if config.get('db_addr') != '' and config.get('db_name') != '' else None
+if config.get('db_type') != '' and config.get('db_link') != '':
+    if config.get('db_type') == 'mysql':
+        DB = MysqlOp()
+    elif config.get('db_type') == 'mongodb':
+        DB = MongoDBOp()
+    else:
+        DB = None
+else:
+    DB = None
 WX_API = WxApi()
 
 
