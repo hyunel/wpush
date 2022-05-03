@@ -4,19 +4,22 @@
 <h6 align="center">使用云函数搭建属于自己的推送服务</h6>
 
 
-### Feature
+## Feature
 - :tada: 超长消息持久化储存
 - :tada: 简单易用的 API 接口
 - :tada: 支持多种类型消息推送
-- :tada: 可选的数据库（MongoDB/MySQL）支持
+- :tada: 可选的多数据库（MongoDB/MySQL）支持
 - :tada: 免维护，一次部署稳定使用
 
-### Get Started
-#### 发送消息
 
-> GET请求可能会因消息内容过长而无法全部显示，如需长文推送请使用POST方法，配置数据库可以进一步提升消息内容长度。
+
+## Get Started
+### 发送消息
+
+> GET请求可能会因消息内容过长而无法全部显示，如需长文推送请使用POST方法，
+> 配置数据库可以进一步提升消息内容长度。
 >
-> POST请求时使用JSON格式，参数字段名称与GET请求一致。
+> POST请求时使用JSON格式，接口路径均为 **/send** ，参数字段名称与GET请求一致。
 >
 > 更多细节说明请参考[企业微信API](https://developer.work.weixin.qq.com/document/path/90372)
 
@@ -38,125 +41,135 @@
   | markdown | markdown消息 |
   |   news   |   图文消息   |
   
-- 发送文本消息
-
-  GET
-
-  ```
-  https://你的云函数地址/send?secret=你配置的密钥&type=text&content=这是消息的内容blablablabla
-  ```
-  
-  POST /send
-
-  ```json
-  {
-      "secret": "你配置的密钥",
-      "type":"text",
-      "content": "这是消息的内容blablablabla"
-  }
-  ```
   
   
+  ### 发送文本消息
   
-- 发送文本卡片消息  
-
-  GET
-
-  ```
-  https://你的云函数地址/send?secret=你配置的密钥&type=textcard&title=这是标题&summary=这是摘要&content=这是消息的内容blablablabla
-  ```
-
-  POST /send
-
-  ```json
-  {
-      "secret": "vanmay",
-      "type":"textcard",
-      "title":"这是标题",
-      "summary":"这是摘要",
-      "content": "这是消息的内容blablablabla"
-  }
-  ```
-
-- 你可以添加 `to` `tag` `party` 参数来筛选发送的企业成员
-
-  ```json
-  {
-      "to": "USER_ID1|USER_ID2",
-      "tag": "TAG_ID1|TAG_ID2",
-      "party": "PARTY_ID",
-      "secret": "你配置的密钥",
-      "type":"textcard",
-      "title":"这是标题",
-      "content": "这是消息的内容blablablabla"
-  }
-  ```
-
-  这些参数也可以是数组：
-
-  ```json
-  {
-      "to": ["USER_ID1", "USER_ID2"],
-      "tag": ["TAG_ID1", "TAG_ID2"],
-      "party": ["PARTY_ID1", "PARTY_ID2"],
-      "secret": "你配置的密钥",
-      "type":"textcard",
-      "title":"这是标题",
-      "content": "这是消息的内容blablablabla"
-  }
-  ```
-
+  - GET
+  
+    ```
+    https://你的云函数地址/send?secret=你配置的密钥&type=text&content=这是消息的内容blablablabla
+    ```
+  
+  - POST
+  
+    ```json
+    {
+        "secret": "你配置的密钥",
+        "type":"text",
+        "content": "这是消息的内容blablablabla"
+    }
+    ```
+  
+  
+  
+  ### 发送文本卡片消息  
+  
+  - GET
+  
+    ```
+    https://你的云函数地址/send?secret=你配置的密钥&type=textcard&title=这是标题&summary=这是摘要&content=这是消息的内容blablablabla
+    ```
+  
+  - POST
+  
+    ```json
+    {
+        "secret": "vanmay",
+        "type":"textcard",
+        "title":"这是标题",
+        "summary":"这是摘要",
+        "content": "这是消息的内容blablablabla"
+    }
+    ```
+  
+  
+  
+  ### 发送Markdown消息
+  
+  - GET
+  
+    ```
+    https://你的云函数地址/send?secret=你配置的密钥&type=markdown&content=这是消息的内容blablablabla
+    ```
+  
+    > 使用GET方法传输markdown语法内容可能会导致content参数无法获取，建议使用POST方法
+  
+  - POST
+  
+    ```json
+    {
+        "secret": "你配置的密钥",
+        "type": "markdown",
+        "content": "# 消息标题\n## 二级标题\n> 引用测试\n\n[baidu](https://baidu.com)"
+    }
+    ```
+  
+  
+  
+  
+  ### 发送图文消息
+  
+  - GET
+  
+    ```
+    https://你的云函数地址/send?secret=你配置的密钥&type=news&title=这是标题&summary=这是摘要&content=这是消息的内容blablablabla&pic=https://cn.bing.com/th?id=OHR.YosemiteNightSky_ZH-CN5864740024_1920x1080.jpg&url=https://www.baidu.com
+    ```
+  
+  - POST
+  
+    ```json
+    {
+        "secret": "vanmay",
+        "type": "news",
+        "title": "这是标题",
+        "summary":"这是摘要",
+        "content": "这是消息的内容blablablabla",
+        "pic": "https://cn.bing.com/th?id=OHR.YosemiteNightSky_ZH-CN5864740024_1920x1080.jpg",
+        "url":"https://www.baidu.com"
+    }
+    ```
+  
+    > 暂时只支持单个图文消息推送
+    >
+    > 跳转链接url可能因微信官方限制而无法访问
+  
+  
+  
+  ### 推送给指定成员
+  
+  - 你可以添加 `to` `tag` `party` 参数来筛选发送的企业成员
+  
+    ```json
+    {
+        "to": "USER_ID1|USER_ID2",
+        "tag": "TAG_ID1|TAG_ID2",
+        "party": "PARTY_ID",
+        "secret": "你配置的密钥",
+        "type":"textcard",
+        "title":"这是标题",
+        "content": "这是消息的内容blablablabla"
+    }
+    ```
+  
+  - 这些参数也可以是数组：
+  
+    ```json
+    {
+        "to": ["USER_ID1", "USER_ID2"],
+        "tag": ["TAG_ID1", "TAG_ID2"],
+        "party": ["PARTY_ID1", "PARTY_ID2"],
+        "secret": "你配置的密钥",
+        "type":"textcard",
+        "title":"这是标题",
+        "content": "这是消息的内容blablablabla"
+    }
+    ```
   
 
-- 发送Markdown消息
 
-  GET
 
-  ```
-  https://你的云函数地址/send?secret=你配置的密钥&type=markdown&content=这是消息的内容blablablabla
-  ```
-
-  > 使用GET方法传输markdown语法内容可能会导致content参数无法获取，建议使用POST方法
-
-  POST /send
-
-  ```json
-  {
-      "secret": "你配置的密钥",
-      "type": "markdown",
-      "content": "# 消息标题\n## 二级标题\n> 引用测试\n\n[baidu](https://baidu.com)"
-  }
-  ```
-
-  
-
-- 发送图文消息
-
-  GET
-
-  ```
-  https://你的云函数地址/send?secret=你配置的密钥&type=news&title=这是标题&summary=这是摘要&content=这是消息的内容blablablabla&pic=https://cn.bing.com/th?id=OHR.YosemiteNightSky_ZH-CN5864740024_1920x1080.jpg&url=https://www.baidu.com
-  ```
-
-  POST /send
-
-  ```json
-  {
-      "secret": "vanmay",
-      "type": "news",
-      "title": "这是标题",
-      "summary":"这是摘要",
-      "content": "这是消息的内容blablablabla",
-      "pic": "https://cn.bing.com/th?id=OHR.YosemiteNightSky_ZH-CN5864740024_1920x1080.jpg",
-      "url":"https://www.baidu.com"
-  }
-  ```
-  
-  > 暂时只支持单个图文消息推送
-  >
-  > 跳转链接url可能因微信官方限制而无法访问
-
-#### 展示消息
+### 展示消息
 
 > 目前仅提供对卡片消息、图文消息进行展示 
 
@@ -164,10 +177,16 @@
 - 未使用数据库: `https://你的云函数地址/show?t=TIME&h=TITLE&c=CONTENT`
 
 
-### 搭建 & 部署
+
+## Deployment
+
+> **2022-05-03 更新**:  
+> 新增首页发送消息，新增对 **MongoDB** 的支持  
+> 修改环境变量中数据库相关参数，请务必修改环境变量再部署
+>
 > **2022-04-23 更新**:  
 > 因为腾讯云函数 5 月 23 日后不再提供免费额度，不建议再使用 [腾讯云函数搭建](docs/scf.md)  
-> 推荐使用 **Vercel** 作为替代，目前已添加对 **Vercel** 的支持
+>推荐使用 **Vercel** 作为替代，目前已添加对 **Vercel** 的支持
 
 - 参数说明
 
