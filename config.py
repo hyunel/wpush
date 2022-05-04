@@ -9,8 +9,6 @@ SYS_CONFIG = {
     "sys_url": "",
     # *API访问密钥, 请务必修改默认值, 系统认证的唯一方式，环境变量 API_SECRET
     "api_secret": "",
-    # 数据库类型，可选项：mongodb/mysql
-    "db_type": "",
     # 数据库完整连接地址
     # mysql示例：mysql+mysqlconnector://[数据库用户名]:[数据库密码]@[数据库地址]:3306/[数据库名]?charset=utf8mb4
     # mongodb示例：mongodb+srv://[数据库用户名]:[数据库密码]@[数据库地址]/[数据库名]?retryWrites=true&w=majority

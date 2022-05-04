@@ -200,7 +200,6 @@
   |   CORP_ID   |                        企业微信公司ID                        |    是    |
   | CORP_SECRET |                      企业微信应用Secret                      |    是    |
   |  AGENT_ID   |                        企业微信应用ID                        |    是    |
-  |   DB_TYPE   |            数据库类型<br>填写请选择mysql或mongodb            |    否    |
   |   DB_LINK   | 数据库完整连接地址<br>mysql示例：mysql+mysqlconnector://[数据库用户名]:[数据库密码]@[数据库地址]:3306/[数据库名]?charset=utf8mb4<br>mongodb示例：mongodb+srv://[数据库用户名]:[数据库密码]@[数据库地址]/[数据库名]?retryWrites=true&w=majority |    否    |
 
 
