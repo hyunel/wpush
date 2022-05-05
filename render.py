@@ -11,25 +11,44 @@ index_html = '''
     <script src="https://unpkg.com/vue@next"></script>
     <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
     <script src="https://unpkg.com/element-plus"></script>
+    <script src="https://unpkg.com/@element-plus/icons-vue"></script>
     <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/svgs/regular/comments.svg">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <title>WPUSH</title>
 </head>
 
 <body>
-    <div id="app">
+
+    <div id="app" v-cloak>
         <!-- 发送消息 -->
         <section>
+            <a href="https://github.com/hyunel/wpush" class="github-corner" aria-label="View source on GitHub"><svg
+                    width="80" height="80" viewBox="0 0 250 250"
+                    style="fill:#70B7FD; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+                    aria-hidden="true">
+                    <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+                    <path
+                        d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+                        fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+                    <path
+                        d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+                        fill="currentColor" class="octo-body"></path>
+                </svg></a>
             <div class="container">
                 <div class="form">
-                    <h2>WPUSH</h2>
+                    <div class="title">
+                        <div class="image">
+                            <img
+                                src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/svgs/regular/comments.svg" />
+                        </div>
+                        <span>WPUSH</span>
+                    </div>
                     <div>
                         <el-form ref="elForm" :model="formData" :rules="rules" size="default" label-width="100px">
                             <el-form-item label-width="0" prop="type">
                                 <el-select v-model="formData.type" placeholder="消息类型" :style="{width: '100%'}"
                                     :disabled="disabled">
                                     <el-option v-for="(item, index) in typeOptions" :key="index" :label="item.label"
-                                        :value="item.value" :disabled="item.disabled" @click="clickOp(item.value)">
+                                        :value="item.value" :disabled="item.disabled" @click="selectType(item.value)">
                                     </el-option>
                                 </el-select>
                             </el-form-item>
@@ -55,8 +74,8 @@ index_html = '''
                                 </el-input>
                             </el-form-item>
                             <el-form-item label-width="0" prop="summary" v-show="type =='textcard'||type=='news'">
-                                <el-input v-model="formData.summary" placeholder="消息摘要" clearable :style="{width: '100%'}"
-                                    :disabled="disabled">
+                                <el-input v-model="formData.summary" placeholder="消息摘要" clearable
+                                    :style="{width: '100%'}" :disabled="disabled">
                                 </el-input>
                             </el-form-item>
                             <el-form-item label-width="0" prop="content">
@@ -65,10 +84,21 @@ index_html = '''
                                 </el-input>
                             </el-form-item>
                             <el-form-item size="large" class="btn">
-                                <el-button type="primary" @click="submitForm" round size="large" :loading="disabled">
-                                    {{submitInfo}}
+                                <el-button type="primary" @click="submitForm" round size="large" :disabled="disabled">
+                                    <el-icon style="vertical-align: middle;" :size="20" v-show="!disabled">
+                                        <Finished />
+                                    </el-icon>
+                                    <el-icon style="vertical-align: middle;" :size="20" v-show="disabled">
+                                        <Loading />
+                                    </el-icon>
+                                    <span style="vertical-align: middle;">{{submitInfo}}</span>
                                 </el-button>
-                                <el-button @click="resetForm" round size="large" :disabled="disabled">重置</el-button>
+                                <el-button @click="resetForm" round size="large" :disabled="disabled">
+                                    <el-icon style="vertical-align: middle;" :size="20">
+                                        <Refresh />
+                                    </el-icon>
+                                    <span style="vertical-align: middle;">重置</span>
+                                </el-button>
                             </el-form-item>
                         </el-form>
                     </div>
@@ -78,6 +108,42 @@ index_html = '''
     </div>
 </body>
 <style>
+    .github-corner:hover .octo-arm {
+        animation: octocat-wave 560ms ease-in-out;
+    }
+
+    @keyframes octocat-wave {
+
+        0%,
+        100% {
+            transform: rotate(0)
+        }
+
+        20%,
+        60% {
+            transform: rotate(-25deg)
+        }
+
+        40%,
+        80% {
+            transform: rotate(10deg)
+        }
+    }
+
+    @media (max-width:500px) {
+        .github-corner:hover .octo-arm {
+            animation: none
+        }
+
+        .github-corner .octo-arm {
+            animation: octocat-wave 560ms ease-in-out
+        }
+    }
+
+    [v-cloak] {
+        display: none;
+    }
+
     * {
         margin: 0;
         padding: 0;
@@ -100,6 +166,32 @@ index_html = '''
     section .color {
         position: absolute;
         filter: blur(200px);
+    }
+
+    .title {
+        margin-bottom: 20px;
+    }
+
+    .image {
+        display: inline-block;
+        overflow: hidden;
+        vertical-align: middle;
+    }
+
+    .image img {
+        position: relative;
+        left: -100px;
+        filter: drop-shadow(#ffffff 100px 0);
+        width: 40px;
+    }
+
+    .title span {
+        color: #fff;
+        font-size: 24px;
+        font-weight: 600;
+        letter-spacing: 5px;
+        margin-left: 10px;
+        vertical-align: middle;
     }
 
 
@@ -125,27 +217,18 @@ index_html = '''
         padding: 50px;
     }
 
-    .form h2 {
-        position: relative;
-        color: #fff;
-        font-size: 24px;
-        font-weight: 600;
-        letter-spacing: 5px;
-        margin-bottom: 30px;
-        cursor: pointer;
-    }
-
-    .el-input__wrapper,
-    .el-textarea__inner {
-        border-radius: 20px !important;
-    }
-
     .el-message-box {
         width: 300px;
     }
 
+    .btn {
+        margin-bottom: 0px !important;
+    }
+
     .btn .el-form-item__content {
-        margin-left: 0px !important
+        margin-left: 0px !important;
+        display: flex;
+        justify-content: space-between
     }
 </style>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
@@ -158,12 +241,12 @@ index_html = '''
                 type: "text",
                 link: "",
                 formData: {
-                    secret: undefined,
-                    title: undefined,
-                    summary: undefined,
-                    content: undefined,
-                    pic: undefined,
-                    url: undefined,
+                    secret: "",
+                    title: "",
+                    summary: "",
+                    content: "",
+                    pic: "",
+                    url: "",
                     type: "text",
                 },
                 rules: {
@@ -218,9 +301,8 @@ index_html = '''
                 }],
             }
         },
-
         methods: {
-            clickOp(item) {
+            selectType(item) {
                 this.type = item
                 if (item == "news" || item == "textcard") {
                     this.rules.title[0].required = true
@@ -237,7 +319,7 @@ index_html = '''
                     if (!valid) {
                         this.disabled = false
                         this.submitInfo = "发送"
-                        this.showErrorConfirm("校验失败，请完整填写参数")
+                        this.showErrorConfirm("请完整填写参数！")
                     }
                     else {
                         axios({
@@ -278,27 +360,30 @@ index_html = '''
                     cancelButtonText: '返回',
                     type: 'success'
                 }).then(() => {
+                    this.resetForm()
                     window.open(this.link, "_self")
-                }).catch(() => {
-                })
+                }).catch((err) => { })
             },
             showSuccessConfirm(msg) {
                 this.$confirm(msg, '提示', {
                     cancelButtonText: '返回',
                     showConfirmButton: false,
                     type: 'success'
-                })
+                }).then().catch((err) => { })
             },
             showErrorConfirm(msg) {
                 this.$confirm(msg, '提示', {
                     cancelButtonText: '返回',
                     showConfirmButton: false,
                     type: 'error'
-                })
+                }).then().catch((err) => { })
             }
         }
     }
     const app = Vue.createApp(App);
+    for ([name, comp] of Object.entries(ElementPlusIconsVue)) {
+        app.component(name, comp);
+    }
     app.use(ElementPlus);
     app.mount("#app");
 </script>
@@ -412,7 +497,7 @@ info_html = '''
     if (params.has('t') && params.has('h') && params.has('c')) {
         document.querySelector('pre').innerText = params.get('c')
         document.querySelector('.title').innerText = params.get('h')
-        document.querySelector('.time .inner').innerText = moment(parseInt(params.get('t'))).format('YYYY-MM-DD hh:mm:ss')
+        document.querySelector('.time .inner').innerText = moment(parseInt(params.get('t'))).format('YYYY-MM-DD HH:mm:ss')
     }
     document.querySelector('.count .inner').innerText = document.querySelector('pre').innerText.length
     if (mode == 1) document.querySelector('article').innerHTML = markdown.toHTML(document.querySelector('pre').innerText)

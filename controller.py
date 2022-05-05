@@ -37,9 +37,9 @@ class MainController:
             raise BadRequestError('请求密钥不正确')
 
     def get_param(self, name, default=None):
-        if name in self.event['queryString']:
+        if name in self.event['queryString'] and self.event['queryString'][name] and isinstance(self.event['queryString'][name], str):
             return self.event['queryString'][name]
-        if name in self.event['body']:
+        if name in self.event['body'] and self.event['body'][name] and isinstance(self.event['body'][name], str):
             return self.event['body'][name]
         return default
 
@@ -112,7 +112,6 @@ class MainController:
             resp['body']['link'] = url
             if msg_type == "news":
                 pic = self.get_param('pic', default=get_bing())
-
                 WX_API.send_news(title, summary, url, pic,
                                  **self.spec_send_to())
 
