@@ -33,9 +33,9 @@
   | summary |            消息摘要，默认消息内容前128个字节内容             |    否    |
   |   url   | 跳转链接，默认展示消息页面，仅textcard、news类型中有效<br>填写时请确保包含协议头（http/https） |    否    |
   |   pic   |         图片链接，默认Bing每日一图，仅news类型中显示         |    否    |
-  |   to    | 指定接收消息的成员，成员ID列表<br>默认向该企业应用的全部成员发送 |    否    |
-  |   tag   |                指定接收消息的部门，部门ID列表                |    否    |
-  |  party  |                指定接收消息的标签，标签ID列表                |    否    |
+  |  user   | 指定接收消息的成员，成员ID列表<br>默认向该企业应用的全部成员发送 |    否    |
+  |   tag   |                指定接收消息的标签，标签ID列表                |    否    |
+  |  party  |                指定接收消息的部门，部门ID列表                |    否    |
   
   | type参数 |     说明     |
   | :------: | :----------: |
@@ -141,11 +141,11 @@
   
   ### 推送给指定成员
   
-  - 你可以添加 `to` `tag` `party` 参数来筛选发送的企业成员
+  - 你可以添加 `user` `tag` `party` 参数来筛选发送的企业成员
   
     ```json
     {
-        "to": "USER_ID1|USER_ID2",
+        "user": "USER_ID1|USER_ID2",
         "tag": "TAG_ID1|TAG_ID2",
         "party": "PARTY_ID",
         "secret": "你配置的密钥",
@@ -159,7 +159,7 @@
   
     ```json
     {
-        "to": ["USER_ID1", "USER_ID2"],
+        "user": ["USER_ID1", "USER_ID2"],
         "tag": ["TAG_ID1", "TAG_ID2"],
         "party": ["PARTY_ID1", "PARTY_ID2"],
         "secret": "你配置的密钥",
