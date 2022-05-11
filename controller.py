@@ -37,9 +37,9 @@ class MainController:
             raise BadRequestError('请求密钥不正确')
 
     def get_param(self, name, default=None):
-        if name in self.event['queryString'] and self.event['queryString'][name] and isinstance(self.event['queryString'][name], str):
+        if name in self.event['queryString'] and self.event['queryString'][name]:
             return self.event['queryString'][name]
-        if name in self.event['body'] and self.event['body'][name] and isinstance(self.event['body'][name], str):
+        if name in self.event['body'] and self.event['body'][name]:
             return self.event['body'][name]
         return default
 
@@ -50,7 +50,7 @@ class MainController:
 
     def spec_send_to(self):
         ret = {}
-        to_user = self.get_param('to')
+        to_user = self.get_param('user')
         to_tag = self.get_param('tag')
         to_party = self.get_param('party')
 
@@ -62,9 +62,9 @@ class MainController:
             to_party = '|'.join(to_party)
 
         if to_tag or to_party:
-            ret['to'] = ''    # 删除默认值
+            ret['user'] = ''    # 删除默认值
         elif to_user:
-            ret['to'] = to_user
+            ret['user'] = to_user
         if to_tag:
             ret['tag'] = to_tag
         if to_party:
@@ -96,7 +96,7 @@ class MainController:
             content = self.get_param('content')
             summary = self.get_param(
                 'summary', default=content[:128] + '...' if len(content) > 128 else content)
-
+            print("内容", content)
             if not url:
                 if DB:
                     msg = DB.insert_message(title, content)
