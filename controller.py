@@ -50,7 +50,10 @@ class MainController:
 
     def spec_send_to(self):
         ret = {}
-        to_user = self.get_param('user')
+        if self.get_param('to'):
+            to_user = self.get_param('to')
+        if self.get_param('user'):
+            to_user = self.get_param('user')
         to_tag = self.get_param('tag')
         to_party = self.get_param('party')
 
