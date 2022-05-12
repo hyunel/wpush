@@ -78,7 +78,7 @@
   
     ```json
     {
-        "secret": "vanmay",
+        "secret": "你配置的密钥",
         "type":"textcard",
         "title":"这是标题",
         "summary":"这是摘要",
@@ -123,7 +123,7 @@
   
     ```json
     {
-        "secret": "vanmay",
+        "secret": "你配置的密钥",
         "type": "news",
         "title": "这是标题",
         "summary":"这是摘要",
