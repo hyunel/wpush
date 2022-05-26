@@ -1,6 +1,5 @@
 requests
 pymongo
 pymongo[srv]
-pytz
 mysql-connector
 sqlalchemy

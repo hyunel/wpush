@@ -8,10 +8,10 @@ index_html = '''
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://unpkg.com/vue@next"></script>
-    <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
-    <script src="https://unpkg.com/element-plus"></script>
-    <script src="https://unpkg.com/@element-plus/icons-vue"></script>
+    <script src="https://unpkg.com/vue@3.2.33/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-plus@2.2.2/dist/index.css">
+    <script src="https://unpkg.com/element-plus@2.2.2/dist/index.full.js"></script>
+    <script src="https://unpkg.com/@element-plus/icons-vue@1.1.4/dist/index.iife.min.js"></script>
     <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/svgs/regular/comments.svg">
     <title>WPUSH</title>
 </head>
@@ -258,7 +258,7 @@ index_html = '''
         padding: 5px 11px !important;
     }
 </style>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/axios@0.27.2/dist/axios.min.js"></script>
 <script>
     const App = {
         data() {
