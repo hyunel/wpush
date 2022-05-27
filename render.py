@@ -12,7 +12,7 @@ index_html = '''
     <link rel="stylesheet" href="https://unpkg.com/element-plus@2.2.2/dist/index.css">
     <script src="https://unpkg.com/element-plus@2.2.2/dist/index.full.js"></script>
     <script src="https://unpkg.com/@element-plus/icons-vue@1.1.4/dist/index.iife.min.js"></script>
-    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/svgs/regular/comments.svg">
+    <link rel="icon" href="https://fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/svgs/regular/comments.svg">
     <title>WPUSH</title>
 </head>
 
@@ -39,7 +39,7 @@ index_html = '''
                     <div class="title">
                         <div class="image">
                             <img
-                                src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/svgs/regular/comments.svg" />
+                                src="https://fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/svgs/regular/comments.svg" />
                         </div>
                         <span>WPUSH</span>
                     </div>
@@ -471,7 +471,7 @@ info_html = '''
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/svgs/regular/comments.svg">
+    <link rel="icon" href="https://fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/svgs/regular/comments.svg">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <title>WPUSH</title>
 </head>
