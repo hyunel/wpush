@@ -8,11 +8,11 @@ index_html = '''
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://unpkg.com/vue@next"></script>
-    <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
-    <script src="https://unpkg.com/element-plus"></script>
-    <script src="https://unpkg.com/@element-plus/icons-vue"></script>
-    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/svgs/regular/comments.svg">
+    <script src="https://unpkg.com/vue@3.2.33/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/element-plus@2.2.2/dist/index.css">
+    <script src="https://unpkg.com/element-plus@2.2.2/dist/index.full.js"></script>
+    <script src="https://unpkg.com/@element-plus/icons-vue@1.1.4/dist/index.iife.min.js"></script>
+    <link rel="icon" href="https://fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/svgs/regular/comments.svg">
     <title>WPUSH</title>
 </head>
 
@@ -39,7 +39,7 @@ index_html = '''
                     <div class="title">
                         <div class="image">
                             <img
-                                src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/svgs/regular/comments.svg" />
+                                src="https://fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/svgs/regular/comments.svg" />
                         </div>
                         <span>WPUSH</span>
                     </div>
@@ -258,7 +258,7 @@ index_html = '''
         padding: 5px 11px !important;
     }
 </style>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/axios@0.27.2/dist/axios.min.js"></script>
 <script>
     const App = {
         data() {
@@ -471,8 +471,8 @@ info_html = '''
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/svgs/regular/comments.svg">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="icon" href="https://fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/svgs/regular/comments.svg">
+    <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <title>WPUSH</title>
 </head>
 
@@ -562,9 +562,9 @@ info_html = '''
         min-height: 100vh;
     }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/js-base64@3.6.1/base64.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/markdown@0.5.0/lib/markdown.min.js"></script>
+<script src="https://fastly.jsdelivr.net/npm/js-base64@3.6.1/base64.min.js"></script>
+<script src="https://fastly.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+<script src="https://fastly.jsdelivr.net/npm/markdown@0.5.0/lib/markdown.min.js"></script>
 <script>
     const params = new URLSearchParams(window.location.search)
     const mode = parseInt(params.has('m') ? params.get('m') : 0)
