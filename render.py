@@ -472,7 +472,7 @@ info_html = '''
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="https://fastly.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/svgs/regular/comments.svg">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
     <title>WPUSH</title>
 </head>
 
@@ -562,9 +562,9 @@ info_html = '''
         min-height: 100vh;
     }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/js-base64@3.6.1/base64.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/markdown@0.5.0/lib/markdown.min.js"></script>
+<script src="https://fastly.jsdelivr.net/npm/js-base64@3.6.1/base64.min.js"></script>
+<script src="https://fastly.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+<script src="https://fastly.jsdelivr.net/npm/markdown@0.5.0/lib/markdown.min.js"></script>
 <script>
     const params = new URLSearchParams(window.location.search)
     const mode = parseInt(params.has('m') ? params.get('m') : 0)
